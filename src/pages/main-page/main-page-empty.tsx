@@ -3,10 +3,9 @@ import Logo from '../../components/logo/logo';
 
 type MainPageEmptyProps = {
   cities: string[];
-  isActive: boolean;
 }
 
-function MainPageEmpty({cities, isActive}: MainPageEmptyProps): JSX.Element {
+function MainPageEmpty({cities}: MainPageEmptyProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -37,7 +36,7 @@ function MainPageEmpty({cities, isActive}: MainPageEmptyProps): JSX.Element {
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList cities={cities} isActive={isActive}/>
+          <CitiesList cities={cities}/>
         </div>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">

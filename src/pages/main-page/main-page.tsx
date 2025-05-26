@@ -6,10 +6,9 @@ import { cards } from '../../const';
 type MainPageProps = {
   rentalOffersCount: number;
   cities: string[];
-  isActive: boolean;
 }
 
-function MainPage({rentalOffersCount, cities, isActive}: MainPageProps): JSX.Element {
+function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -40,7 +39,7 @@ function MainPage({rentalOffersCount, cities, isActive}: MainPageProps): JSX.Ele
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList cities={cities} isActive = {isActive}/>
+          <CitiesList cities={cities}/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
