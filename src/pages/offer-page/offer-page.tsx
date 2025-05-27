@@ -5,7 +5,7 @@ function OfferPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>6 cities. Специальные предложения</title>
+        <title>Специальные предложения</title>
       </Helmet>
       <header className="header">
         <div className="container">

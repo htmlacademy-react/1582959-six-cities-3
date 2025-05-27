@@ -13,7 +13,7 @@ function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
-        <title>6 cities. Главная</title>
+        <title>Главная</title>
       </Helmet>
       <header className="header">
         <div className="container">

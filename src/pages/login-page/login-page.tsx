@@ -5,7 +5,7 @@ function LoginPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <Helmet>
-        <title>6 cities. Авторизация</title>
+        <title>Авторизация</title>
       </Helmet>
       <header className="header">
         <div className="container">

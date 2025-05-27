@@ -5,7 +5,7 @@ function NotFoundPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
-        <title>6 cities. Страница не найдена</title>
+        <title>Страница не найдена</title>
       </Helmet>
       <header className="header">
         <div className="container">

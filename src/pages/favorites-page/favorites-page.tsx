@@ -5,7 +5,7 @@ function FavoritesPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>6 cities. Избранное</title>
+        <title>Избранное</title>
       </Helmet>
       <header className="header">
         <div className="container">
