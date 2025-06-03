@@ -37,7 +37,7 @@ function App({rentalOffersCount, cities, offers, reviews}: MainPageProps): JSX.E
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage />
+                <FavoritesPage/>
               </PrivateRoute>
             }
           />
