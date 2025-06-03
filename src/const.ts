@@ -1,27 +1,18 @@
+import { Cards, Rating } from './types/types';
+
 export const Setting = {
   RentalOffersCount: 312
 };
 
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amstardam', 'Hamburg', 'Dusseldorf'];
 
-type Cards = {
-  id: number;
-  isPremium: boolean;
-  previewImage: string;
-  price: number;
-  isFavorite: boolean;
-  rating: number;
-  title: string;
-  type: string;
-}[];
-
-export const cards: Cards = [
+export const cards: Cards[] = [
   {
     id: 1,
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
-    isFavorite: false,
+    isFavorite: true,
     rating: 4,
     title: 'Beautiful & luxurious apartment at great location',
     type: 'Apartment'
@@ -31,7 +22,7 @@ export const cards: Cards = [
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
-    isFavorite: true,
+    isFavorite: false,
     rating: 4,
     title: 'Wood and stone place',
     type: 'Room'
@@ -66,6 +57,29 @@ export const cards: Cards = [
     title: 'Wood and stone place',
     type: 'Room'
   }
+];
+
+export const stars: Rating[] = [
+  {
+    id: 5,
+    title: 'perfect'
+  },
+  {
+    id: 4,
+    title: 'good'
+  },
+  {
+    id: 3,
+    title: 'not bad'
+  },
+  {
+    id: 2,
+    title: 'badly'
+  },
+  {
+    id: 1,
+    title: 'terribly'
+  },
 ];
 
 export enum AppRoute {

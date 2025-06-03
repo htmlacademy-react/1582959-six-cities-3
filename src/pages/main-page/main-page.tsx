@@ -1,8 +1,7 @@
 import {Helmet} from 'react-helmet-async';
-import CitiesCard from '../../components/card/cities-card';
 import CitiesList from '../../components/cities-list/cities-list';
+import CardList from '../../components/card/card-list';
 import Logo from '../../components/logo/logo';
-import { cards } from '../../const';
 
 type MainPageProps = {
   rentalOffersCount: number;
@@ -65,20 +64,7 @@ function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {cards.map((card) => (
-                  <CitiesCard
-                    key={card.id}
-                    isPremium={card.isPremium}
-                    previewImage={card.previewImage}
-                    price={card.price}
-                    isFavorite={card.isFavorite}
-                    rating={card.rating}
-                    title={card.title}
-                    type={card.type}
-                  />
-                ))}
-              </div>
+              <CardList/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

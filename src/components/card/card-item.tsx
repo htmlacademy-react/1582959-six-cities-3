@@ -1,4 +1,7 @@
-type CitiesCardProps = {
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+type CardItemProps = {
   isPremium: boolean;
   previewImage: string;
   price: number;
@@ -8,7 +11,7 @@ type CitiesCardProps = {
   type: string;
 };
 
-function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, type}: CitiesCardProps): JSX.Element {
+function CardItem({isPremium, previewImage, price, isFavorite, rating, title, type}: CardItemProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       {isPremium ? (
@@ -19,9 +22,9 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
         ''
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={AppRoute.Offer}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -43,7 +46,7 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={AppRoute.Offer}>{title} </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -51,4 +54,4 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
   );
 }
 
-export default CitiesCard;
+export default CardItem;
