@@ -6,6 +6,12 @@ export const Setting = {
 
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amstardam', 'Hamburg', 'Dusseldorf'];
 
+export enum Page {
+  Main = 'cities',
+  Favorites = 'favorites',
+  Offer = 'near-places'
+}
+
 export const cards: Cards[] = [
   {
     id: 1,

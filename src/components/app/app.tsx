@@ -25,7 +25,7 @@ function App({rentalOffersCount, cities, offers, reviews}: MainPageProps): JSX.E
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities} />}
+            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities}/>}
           />
           <Route
             path={AppRoute.Login}

@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { CardLocation } from '../../types/types';
 
 type CardItemProps = {
+  id: number;
   isPremium: boolean;
   previewImage: string;
   price: number;
@@ -9,11 +10,24 @@ type CardItemProps = {
   rating: number;
   title: string;
   type: string;
+  onCardHover?: (id: string | number | null) => void;
+  page: CardLocation;
 };
 
-function CardItem({isPremium, previewImage, price, isFavorite, rating, title, type}: CardItemProps): JSX.Element {
+function CardItem({id, isPremium, previewImage, price, isFavorite, rating, title, type, onCardHover, page}: CardItemProps): JSX.Element {
+  const addCardId = () => {
+    onCardHover?.(id);
+  };
+
+  const removeCardID = () => {
+    onCardHover?.(null);
+  };
+
   return (
-    <article className="cities__card place-card">
+    <article className={`${page}__card place-card`}
+      onMouseLeave={removeCardID}
+      onMouseEnter={addCardId}
+    >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -21,14 +35,14 @@ function CardItem({isPremium, previewImage, price, isFavorite, rating, title, ty
       ) : (
         ''
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+      <div className={`${page}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`/offer/${id}`}>
+          <img className="place-card__image" src={previewImage} width={`${page === 'favorites' ? '150' : '260'}`} height={`${page === 'favorites' ? '110' : '200'}`} alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
+          <div className={`${page === 'favorites' ? 'favorites__card-info ' : ''}place-card__price`}>
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
@@ -46,7 +60,7 @@ function CardItem({isPremium, previewImage, price, isFavorite, rating, title, ty
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title} </Link>
+          <Link to={`/offer/${id}`}>{title} </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

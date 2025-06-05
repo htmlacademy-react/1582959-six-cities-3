@@ -2,6 +2,7 @@ import {Helmet} from 'react-helmet-async';
 import CitiesList from '../../components/cities-list/cities-list';
 import CardList from '../../components/card/card-list';
 import Logo from '../../components/logo/logo';
+import { Page } from '../../const';
 
 type MainPageProps = {
   rentalOffersCount: number;
@@ -64,7 +65,7 @@ function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardList/>
+              <CardList page={Page.Main} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

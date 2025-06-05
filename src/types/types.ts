@@ -49,3 +49,5 @@ export type Rating = {
             id: number;
             title: string;
           }
+
+export type CardLocation = 'cities' | 'favorites' | 'near-places';
