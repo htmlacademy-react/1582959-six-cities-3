@@ -186,14 +186,7 @@ function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
               {cards.map((card) => (
                 <CardItem
                   key={card.id}
-                  id={card.id}
-                  isPremium={card.isPremium}
-                  previewImage={card.previewImage}
-                  price={card.price}
-                  isFavorite={card.isFavorite}
-                  rating={card.rating}
-                  title={card.title}
-                  type={card.type}
+                  card={card}
                   page={Page.Offer}
                 />
               ))}

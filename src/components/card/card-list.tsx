@@ -8,7 +8,7 @@ type CardListProps = {
 }
 
 function CardList({page}: CardListProps): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<string | number | null>(null);
+  const [, setActiveOffer] = useState<string | number | null>(null);
 
   function onCardHover(id: string | number | null) {
     setActiveOffer(id);
@@ -18,14 +18,7 @@ function CardList({page}: CardListProps): JSX.Element {
       {cards.map((card) => (
         <CardItem
           key={card.id}
-          id={card.id}
-          isPremium={card.isPremium}
-          previewImage={card.previewImage}
-          price={card.price}
-          isFavorite={card.isFavorite}
-          rating={card.rating}
-          title={card.title}
-          type={card.type}
+          card={card}
           onCardHover={onCardHover}
           page={page}
         />

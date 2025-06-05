@@ -1,4 +1,4 @@
-import { Cards, Rating } from './types/types';
+import { Card, Rating } from './types/types';
 
 export const Setting = {
   RentalOffersCount: 312
@@ -12,12 +12,15 @@ export enum Page {
   Offer = 'near-places'
 }
 
-export const cards: Cards[] = [
+export const cards: Card[] = [
   {
     id: 1,
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
+    city: {
+      name: 'Amstardam'
+    },
     isFavorite: true,
     rating: 4,
     title: 'Beautiful & luxurious apartment at great location',
@@ -28,6 +31,9 @@ export const cards: Cards[] = [
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
+    city: {
+      name: 'Amstardam'
+    },
     isFavorite: false,
     rating: 4,
     title: 'Wood and stone place',
@@ -38,6 +44,9 @@ export const cards: Cards[] = [
     isPremium: false,
     previewImage: 'img/apartment-02.jpg',
     price: 132,
+    city: {
+      name: 'Hamburg'
+    },
     isFavorite: false,
     rating: 4,
     title: 'Canal View Prinsengracht',
@@ -48,6 +57,9 @@ export const cards: Cards[] = [
     isPremium: true,
     previewImage: 'img/apartment-03.jpg',
     price: 180,
+    city: {
+      name: 'Paris'
+    },
     isFavorite: false,
     rating: 5,
     title: 'Nice, cozy, warm big bed apartment',
@@ -58,6 +70,9 @@ export const cards: Cards[] = [
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
+    city: {
+      name: 'Paris'
+    },
     isFavorite: true,
     rating: 4,
     title: 'Wood and stone place',

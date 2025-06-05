@@ -34,11 +34,14 @@ export type Reviews = {
         rating: number;
         };
 
-export type Cards = {
+export type Card = {
             id: number;
             isPremium: boolean;
             previewImage: string;
             price: number;
+            city: {
+              name: string;
+            };
             isFavorite: boolean;
             rating: number;
             title: string;
