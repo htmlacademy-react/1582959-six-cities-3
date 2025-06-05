@@ -3,6 +3,7 @@ type Cities = {
   };
 
 function CitiesList({cities}: Cities): JSX.Element {
+
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">

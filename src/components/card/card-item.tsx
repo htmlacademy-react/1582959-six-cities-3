@@ -1,16 +1,27 @@
-type CitiesCardProps = {
-  isPremium: boolean;
-  previewImage: string;
-  price: number;
-  isFavorite: boolean;
-  rating: number;
-  title: string;
-  type: string;
+import { Link } from 'react-router-dom';
+import { CardLocation, Card } from '../../types/types';
+
+type CardItemProps = {
+  card: Card;
+  onCardHover?: (id: string | number | null) => void;
+  page: CardLocation;
 };
 
-function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, type}: CitiesCardProps): JSX.Element {
+function CardItem({card, onCardHover, page}: CardItemProps): JSX.Element {
+  const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = card;
+  const addCardId = () => {
+    onCardHover?.(id);
+  };
+
+  const removeCardID = () => {
+    onCardHover?.(null);
+  };
+
   return (
-    <article className="cities__card place-card">
+    <article className={`${page}__card place-card`}
+      onMouseLeave={removeCardID}
+      onMouseEnter={addCardId}
+    >
       {isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -18,14 +29,14 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
       ) : (
         ''
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
-        </a>
+      <div className={`${page}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`/offer/${id}`}>
+          <img className="place-card__image" src={previewImage} width={`${page === 'favorites' ? '150' : '260'}`} height={`${page === 'favorites' ? '110' : '200'}`} alt="Place image" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
+          <div className={`${page === 'favorites' ? 'favorites__card-info ' : ''}place-card__price`}>
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
@@ -43,7 +54,7 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title} </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -51,4 +62,4 @@ function CitiesCard({isPremium, previewImage, price, isFavorite, rating, title, 
   );
 }
 
-export default CitiesCard;
+export default CardItem;
