@@ -7,7 +7,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { Offers, Reviews } from '../../types/types';
+import { Offers, Reviews, City, Point, Points } from '../../types/types';
 
 type Cities = string[];
 
@@ -16,16 +16,19 @@ type MainPageProps = {
   cities: Cities;
   offers: Offers[];
   reviews: Reviews[];
+  city: City;
+  points: Points;
+  selectedPoint?: Point | undefined;
 }
 
-function App({rentalOffersCount, cities, offers, reviews}: MainPageProps): JSX.Element {
+function App({rentalOffersCount, cities, offers, reviews, city, points, selectedPoint}: MainPageProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities}/>}
+            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities} city={city} points={points} selectedPoint={selectedPoint} />}
           />
           <Route
             path={AppRoute.Login}

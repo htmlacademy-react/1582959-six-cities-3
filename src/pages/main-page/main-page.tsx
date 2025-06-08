@@ -2,14 +2,19 @@ import {Helmet} from 'react-helmet-async';
 import CitiesList from '../../components/cities-list/cities-list';
 import CardList from '../../components/card/card-list';
 import Logo from '../../components/logo/logo';
+import Map from '../../components/map/map';
 import { Page } from '../../const';
+import {City, Points, Point} from '../../types/types';
 
 type MainPageProps = {
   rentalOffersCount: number;
   cities: string[];
+  city: City;
+  points: Points;
+  selectedPoint: Point | undefined;
 }
 
-function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
+function MainPage({rentalOffersCount, cities, city, points, selectedPoint}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -68,7 +73,7 @@ function MainPage({rentalOffersCount, cities}: MainPageProps): JSX.Element {
               <CardList page={Page.Main} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={city} points={points} selectedPoint={selectedPoint} />
             </div>
           </div>
         </div>
