@@ -28,7 +28,7 @@ function App({rentalOffersCount, cities, offers, reviews, city, points, selected
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities} city={city} points={points} selectedPoint={selectedPoint} />}
+            element={<MainPage rentalOffersCount = {rentalOffersCount} cities={cities} city={city} points={points} />}
           />
           <Route
             path={AppRoute.Login}
