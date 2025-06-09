@@ -14,8 +14,8 @@ type Cities = string[];
 type MainPageProps = {
   rentalOffersCount: number;
   cities: Cities;
-  offers: Offers[];
-  reviews: Reviews[];
+  offers: Offers;
+  reviews: Reviews;
   city: City;
   points: Points;
   selectedPoint?: Point | undefined;
@@ -46,11 +46,11 @@ function App({rentalOffersCount, cities, offers, reviews, city, points, selected
           />
           <Route
             path='offer'
-            element={<OfferPage offers={offers[0]} reviews={reviews} />}
+            element={<OfferPage offers={offers} reviews={reviews} city={city} points={points} selectedPoint={selectedPoint}/>}
           >
             <Route
               path={AppRoute.Offer}
-              element={<OfferPage offers={offers[0]} reviews={reviews} />}
+              element={<OfferPage offers={offers} reviews={reviews} city={city} points={points} selectedPoint={selectedPoint}/>}
             />
           </Route>
           <Route

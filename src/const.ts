@@ -9,7 +9,8 @@ export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amstardam', 'H
 export enum Page {
   Main = 'cities',
   Favorites = 'favorites',
-  Offer = 'near-places'
+  Offer = 'near-places',
+  OfferMap = 'offer'
 }
 
 export const cards: Card[] = [

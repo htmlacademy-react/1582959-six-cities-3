@@ -73,7 +73,7 @@ function MainPage({rentalOffersCount, cities, city, points, selectedPoint}: Main
               <CardList page={Page.Main} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} points={points} selectedPoint={selectedPoint} />
+              <Map city={city} points={points} page={Page.Main} selectedPoint={selectedPoint} />
             </div>
           </div>
         </div>

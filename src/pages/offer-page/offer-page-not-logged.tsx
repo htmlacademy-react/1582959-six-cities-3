@@ -1,8 +1,8 @@
 import Logo from '../../components/logo/logo';
-import Review from '../../components/review/review';
+import ReviewItem from '../../components/review/review-item';
 import { Reviews } from '../../types/types';
 
-function OfferPageNotLogged(reviews: Reviews[]): JSX.Element {
+function OfferPageNotLogged(reviews: Reviews): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -147,7 +147,7 @@ function OfferPageNotLogged(reviews: Reviews[]): JSX.Element {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ul className="reviews__list">
                   {reviews.map((review) => (
-                    <Review key={review.id} reviews={review} />
+                    <ReviewItem key={review.id} review={review} />
                   ))}
                 </ul>
               </section>

@@ -1,4 +1,4 @@
-export type Offers = {
+export type Offer = {
     id: string;
     title: string;
     type: string;
@@ -15,7 +15,9 @@ export type Offers = {
     previewImage: string;
     };
 
-export type Reviews = {
+export type Offers = Offer[];
+
+export type Review = {
         id: string;
         date: string;
         user: {
@@ -26,6 +28,8 @@ export type Reviews = {
         comment: string;
         rating: number;
         };
+
+export type Reviews = Review[];
 
 export type Card = {
             id: number;

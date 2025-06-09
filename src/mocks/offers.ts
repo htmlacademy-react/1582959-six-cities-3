@@ -1,6 +1,6 @@
 import { Offers } from '../types/types';
 
-export const offers: Offers[] = [
+export const offers: Offers = [
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
@@ -59,9 +59,9 @@ export const offers: Offers[] = [
       longitude: 4.929309666406198,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
-    rating: 1.6,
+    rating: 4.8,
     previewImage: 'https://15.design.htmlacademy.pro/static/hotel/14.jpg',
   },
   {
