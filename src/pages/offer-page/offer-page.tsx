@@ -1,18 +1,23 @@
 import {Helmet} from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
-import Review from '../../components/review/review';
-import { Offers, Reviews } from '../../types/types';
+import Map from '../../components/map/map';
+import ReviewItem from '../../components/review/review-item';
+import { Offers, Reviews, City, Points, Point } from '../../types/types';
 import { Page, cards } from '../../const';
 import CardItem from '../../components/card/card-item';
 
 type OfferPageProps = {
   offers: Offers;
-  reviews: Reviews[];
+  reviews: Reviews;
+  city: City;
+  points: Points;
+  selectedPoint: Point | undefined;
 };
 
-function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
-  const {rating, title, type, price, isFavorite} = offers;
+function OfferPage({offers, reviews, city, points, selectedPoint}: OfferPageProps): JSX.Element {
+  const premiumOffers = offers.filter((offer) => offer.isPremium);
+  const firstOffer = premiumOffers.slice(0, 1)[0];
 
   return (
     <div className="page">
@@ -75,9 +80,9 @@ function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {title}
+                  {firstOffer.title}
                 </h1>
-                <button className={isFavorite
+                <button className={firstOffer.isFavorite
                   ? 'offer__bookmark-button offer__bookmark-button--active button'
                   : 'offer__bookmark-button button'} type="button"
                 >
@@ -89,14 +94,14 @@ function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{ width: `${Math.round(firstOffer.rating) * 20}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{rating}</span>
+                <span className="offer__rating-value rating__value">{firstOffer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {type}
+                  {firstOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -106,7 +111,7 @@ function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{price}</b>
+                <b className="offer__price-value">&euro;{firstOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
@@ -170,14 +175,14 @@ function OfferPage({offers, reviews}: OfferPageProps): JSX.Element {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ul className="reviews__list">
                   {reviews.map((review) => (
-                    <Review key={review.id} reviews={review} />
+                    <ReviewItem key={review.id} review={review} />
                   ))}
                 </ul>
                 <ReviewForm/>
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map city={city} points={points} page={Page.OfferMap} selectedPoint={selectedPoint} />
         </section>
         <div className="container">
           <section className="near-places places">

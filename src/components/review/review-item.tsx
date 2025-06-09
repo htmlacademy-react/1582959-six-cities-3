@@ -1,11 +1,14 @@
-import { Reviews } from '../../types/types';
+import { Review} from '../../types/types';
 
 type ReviewProps = {
-    reviews: Reviews;
+    review: Review;
 }
 
-function Review({reviews}: ReviewProps): JSX.Element {
-  const {date, user, comment} = reviews;
+function ReviewItem({review}: ReviewProps): JSX.Element {
+  const {date, user, comment, rating} = review;
+  const dateObject = new Date(date);
+  const formattedDate = `${dateObject.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -15,21 +18,28 @@ function Review({reviews}: ReviewProps): JSX.Element {
         <span className="reviews__user-name">
           {user.name}
         </span>
+        {user.isPro ? (
+          <span className="offer__user-status">
+        Pro
+          </span>
+        ) : (
+          ''
+        )}
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>April 2019</time>
+        <time className="reviews__time" dateTime={date}>{formattedDate}</time>
       </div>
     </li>
   );
 }
 
-export default Review;
+export default ReviewItem;

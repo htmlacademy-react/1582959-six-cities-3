@@ -9,12 +9,13 @@ export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amstardam', 'H
 export enum Page {
   Main = 'cities',
   Favorites = 'favorites',
-  Offer = 'near-places'
+  Offer = 'near-places',
+  OfferMap = 'offer'
 }
 
 export const cards: Card[] = [
   {
-    id: 1,
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
@@ -27,7 +28,7 @@ export const cards: Card[] = [
     type: 'Apartment'
   },
   {
-    id: 2,
+    id: 'b242bade-6e83-40f9-93b7-08efcadbd678',
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
@@ -40,7 +41,7 @@ export const cards: Card[] = [
     type: 'Room'
   },
   {
-    id: 3,
+    id: 'd52bf1af-2edd-47dc-89f0-38068abbb57c',
     isPremium: false,
     previewImage: 'img/apartment-02.jpg',
     price: 132,
@@ -53,7 +54,7 @@ export const cards: Card[] = [
     type: 'Apartment'
   },
   {
-    id: 4,
+    id: 'b4891f8a-0083-4d28-945a-5a398f16f7c0',
     isPremium: true,
     previewImage: 'img/apartment-03.jpg',
     price: 180,
@@ -66,7 +67,7 @@ export const cards: Card[] = [
     type: 'Apartment'
   },
   {
-    id: 5,
+    id: 'g4891f8a-7521-4d28-852a-5a412f16f7c0',
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
@@ -115,3 +116,7 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const PIN_MARKER_DEFAULT = 'img/pin.svg';
+
+export const PIN_MARKER_CURRENT = 'img/pin-active.svg';
