@@ -3,7 +3,7 @@ import { CardLocation, Card } from '../../types/types';
 
 type CardItemProps = {
   card: Card;
-  onCardHover?: (id: string | number | null) => void;
+  onCardHover?: (id: string | null) => void;
   page: CardLocation;
 };
 

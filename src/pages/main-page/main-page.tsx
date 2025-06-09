@@ -1,20 +1,27 @@
 import {Helmet} from 'react-helmet-async';
 import CitiesList from '../../components/cities-list/cities-list';
-import CardList from '../../components/card/card-list';
 import Logo from '../../components/logo/logo';
 import Map from '../../components/map/map';
 import { Page } from '../../const';
 import {City, Points, Point} from '../../types/types';
+import CardItem from '../../components/card/card-item';
+import { useState } from 'react';
+import { cards } from '../../const';
 
 type MainPageProps = {
   rentalOffersCount: number;
   cities: string[];
   city: City;
   points: Points;
-  selectedPoint: Point | undefined;
 }
 
-function MainPage({rentalOffersCount, cities, city, points, selectedPoint}: MainPageProps): JSX.Element {
+function MainPage({rentalOffersCount, cities, city, points}: MainPageProps): JSX.Element {
+  const [activeOffer, setActiveOffer] = useState<Point | undefined>(undefined);
+
+  function onCardHover(id: string | null) {
+    const currentPoint = points.find((point) => point.id === id);
+    setActiveOffer(currentPoint);
+  }
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -70,10 +77,20 @@ function MainPage({rentalOffersCount, cities, city, points, selectedPoint}: Main
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardList page={Page.Main} />
+
+              <div className="cities__places-list places__list tabs__content">
+                {cards.map((card) => (
+                  <CardItem
+                    key={card.id}
+                    card={card}
+                    onCardHover={onCardHover}
+                    page={Page.Main}
+                  />
+                ))}
+              </div>
             </section>
             <div className="cities__right-section">
-              <Map city={city} points={points} page={Page.Main} selectedPoint={selectedPoint} />
+              <Map city={city} points={points} page={Page.Main} selectedPoint={activeOffer} />
             </div>
           </div>
         </div>

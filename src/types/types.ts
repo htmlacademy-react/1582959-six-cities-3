@@ -32,7 +32,7 @@ export type Review = {
 export type Reviews = Review[];
 
 export type Card = {
-            id: number;
+  id: string;
             isPremium: boolean;
             previewImage: string;
             price: number;
@@ -58,6 +58,7 @@ export type City = {
           };
 
 export type Point = {
+  id: string;
             name: string;
             latitude: number;
             longitude: number;

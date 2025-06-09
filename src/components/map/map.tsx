@@ -40,7 +40,7 @@ function Map({city, points, page, selectedPoint}: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.name
+            selectedPoint !== undefined && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
