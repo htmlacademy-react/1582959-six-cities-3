@@ -1,16 +1,16 @@
-import {useRef, useEffect} from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
+import { useRef, useEffect } from 'react';
+import { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { City, Point, Points } from '../../types/types';
-import {PIN_MARKER_DEFAULT, PIN_MARKER_CURRENT, Page} from '../../const';
+import { PIN_MARKER_DEFAULT, PIN_MARKER_CURRENT, Page } from '../../const';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-    city: City;
-    points: Points;
-    page: Page;
-    selectedPoint: Point | undefined;
-  };
+  city: City;
+  points: Points;
+  page: Page;
+  selectedPoint: Point | undefined;
+};
 
 const defaultCustomIcon = new Icon({
   iconUrl: PIN_MARKER_DEFAULT,
@@ -24,7 +24,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, points, page, selectedPoint}: MapProps): JSX.Element {
+function Map({ city, points, page, selectedPoint }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -34,8 +34,8 @@ function Map({city, points, page, selectedPoint}: MapProps): JSX.Element {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude
+          lat: point.city.latitude,
+          lng: point.city.longitude
         });
 
         marker
@@ -53,7 +53,7 @@ function Map({city, points, page, selectedPoint}: MapProps): JSX.Element {
     }
   }, [map, points, selectedPoint]);
 
-  return <section className={`${page}__map map`} style={{height: Page.Main ? '512px' : '579px'}} ref={mapRef}></section>;
+  return <section className={`${page}__map map`} ref={mapRef}></section>;
 }
 
 export default Map;

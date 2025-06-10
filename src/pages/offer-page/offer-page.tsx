@@ -1,75 +1,49 @@
-import {Helmet} from 'react-helmet-async';
-import Logo from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
+import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
-import { Offers, Reviews, City, Points, Point } from '../../types/types';
-import { Page, cards } from '../../const';
+import { Reviews, City, Point } from '../../types/types';
+import { Page, AuthorizationStatus, firstOffer, threeFirstPoints } from '../../const';
 import CardItem from '../../components/card/card-item';
 
 type OfferPageProps = {
-  offers: Offers;
   reviews: Reviews;
   city: City;
-  points: Points;
   selectedPoint: Point | undefined;
+  authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({offers, reviews, city, points, selectedPoint}: OfferPageProps): JSX.Element {
-  const premiumOffers = offers.filter((offer) => offer.isPremium);
-  const firstOffer = premiumOffers.slice(0, 1)[0];
+function OfferPage({ reviews, city, selectedPoint, authorizationStatus }: OfferPageProps): JSX.Element {
 
   return (
     <div className="page">
       <Helmet>
         <title>Специальные предложения</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header authorizationStatus={AuthorizationStatus.Auth} />
 
       <main className="page__main page__main--offer">
-        <section className="offer">
+        <section className="offer">F
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
               </div>
               <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
               </div>
             </div>
           </div>
@@ -153,7 +127,7 @@ function OfferPage({offers, reviews, city, points, selectedPoint}: OfferPageProp
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
                     Angelina
@@ -178,20 +152,21 @@ function OfferPage({offers, reviews, city, points, selectedPoint}: OfferPageProp
                     <ReviewItem key={review.id} review={review} />
                   ))}
                 </ul>
-                <ReviewForm/>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <ReviewForm /> : ''}
               </section>
             </div>
           </div>
-          <Map city={city} points={points} page={Page.OfferMap} selectedPoint={selectedPoint} />
+          <Map city={city} points={threeFirstPoints} page={Page.OfferMap} selectedPoint={selectedPoint} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {cards.map((card) => (
+              {threeFirstPoints.map((point) => (
                 <CardItem
-                  key={card.id}
-                  card={card}
+                  key={point.id}
+                  point={point}
                   page={Page.Offer}
                 />
               ))}
