@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {Setting, cities} from './const';
-import { offers } from './mocks/offers';
-import { reviews } from './mocks/reviews';
+import { Setting, cities } from './const';
 import { CITY } from './mocks/city';
 import { POINTS } from './mocks/points';
 
@@ -14,13 +12,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      rentalOffersCount = {Setting.RentalOffersCount}
+      rentalOffersCount={Setting.RentalOffersCount}
       cities={cities}
-      offers={offers}
-      reviews={reviews}
       city={CITY}
       points={POINTS}
-      // selectedPoint={selectedPoint}
     />
   </React.StrictMode>
 );

@@ -3,18 +3,17 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
-import { Reviews, City, Point } from '../../types/types';
-import { Page, AuthorizationStatus, firstOffer, threeFirstPoints } from '../../const';
+import { City, Point } from '../../types/types';
+import { Page, AuthorizationStatus, firstOffer, threeFirstPoints, offerReviews, Setting } from '../../const';
 import CardItem from '../../components/card/card-item';
 
 type OfferPageProps = {
-  reviews: Reviews;
   city: City;
   selectedPoint: Point | undefined;
   authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({ reviews, city, selectedPoint, authorizationStatus }: OfferPageProps): JSX.Element {
+function OfferPage({ city, selectedPoint, authorizationStatus }: OfferPageProps): JSX.Element {
 
   return (
     <div className="page">
@@ -146,9 +145,9 @@ function OfferPage({ reviews, city, selectedPoint, authorizationStatus }: OfferP
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Setting.ReviewsCount}</span></h2>
                 <ul className="reviews__list">
-                  {reviews.map((review) => (
+                  {offerReviews.map((review) => (
                     <ReviewItem key={review.id} review={review} />
                   ))}
                 </ul>

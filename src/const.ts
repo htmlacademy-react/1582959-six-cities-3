@@ -1,15 +1,19 @@
 import { Rating } from './types/types';
 import { POINTS } from './mocks/points';
 import { offers } from './mocks/offers';
+import { reviews } from './mocks/reviews';
+import { sortByDate } from './utils';
 
 export const favoritesOffers = POINTS.filter((point) => point.isFavorite);
 export const premiumOffers = offers.filter((offer) => offer.isPremium);
 export const firstOffer = premiumOffers.slice(0, 1)[0];
 export const threeFirstPoints = POINTS.slice(0, 3);
+export const offerReviews = sortByDate(reviews).slice(0, 10);
 
 export const Setting = {
   RentalOffersCount: POINTS.length,
   FavoritesCount: favoritesOffers.length,
+  ReviewsCount: offerReviews.length,
 };
 
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amstardam', 'Hamburg', 'Dusseldorf'];
