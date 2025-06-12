@@ -1,11 +1,11 @@
-import { Review} from '../../types/types';
+import { Review } from '../../types/types';
 
 type ReviewProps = {
-    review: Review;
+  review: Review;
 }
 
-function ReviewItem({review}: ReviewProps): JSX.Element {
-  const {date, user, comment, rating} = review;
+function ReviewItem({ review }: ReviewProps): JSX.Element {
+  const { date, user, comment, rating } = review;
   const dateObject = new Date(date);
   const formattedDate = `${dateObject.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
 
@@ -13,14 +13,14 @@ function ReviewItem({review}: ReviewProps): JSX.Element {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
           {user.name}
         </span>
         {user.isPro ? (
           <span className="offer__user-status">
-        Pro
+            Pro
           </span>
         ) : (
           ''

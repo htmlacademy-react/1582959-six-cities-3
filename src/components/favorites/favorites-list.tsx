@@ -1,14 +1,13 @@
 import CardItem from '../card/card-item';
-import { cards, Page } from '../../const';
+import { Page, favoritesOffers } from '../../const';
 
 function FavoritesList(): JSX.Element {
-  const favoritesOffers = cards.filter((card) => card.isFavorite);
   return (
     <div className="favorites__places">
-      {favoritesOffers.map((card) => (
+      {favoritesOffers.map((point) => (
         <CardItem
-          key={card.id}
-          card={card}
+          key={point.id}
+          point={point}
           page={Page.Favorites}
         />
       ))}
