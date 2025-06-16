@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { CardLocation, Point } from '../../types/types';
+import { CardLocation, Offer } from '../../types/types';
 
 type CardItemProps = {
-  point: Point;
+  offer: Offer;
   onCardHover?: (id: string | null) => void;
   page: CardLocation;
 };
 
-function CardItem({ point, onCardHover, page }: CardItemProps): JSX.Element {
-  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = point;
+function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
+  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const addCardId = () => {
     onCardHover?.(id);
   };

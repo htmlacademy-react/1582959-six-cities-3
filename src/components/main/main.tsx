@@ -1,21 +1,48 @@
 import { useState } from 'react';
-import { City, Points, Point } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeSort } from '../../store/action';
+import { City, Offer } from '../../types/types';
 import Map from '../../components/map/map';
 import CardItem from '../../components/card/card-item';
+import { sorts } from '../../const';
+import Sort from '../sort/sort';
 import { Page } from '../../const';
-import { POINTS } from '../../mocks/points';
+import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../utils';
 
 type MainProps = {
-  rentalOffersCount: number;
   city: City;
-  points: Points;
+  activeCity: string;
 }
 
-function Main({ rentalOffersCount, city, points }: MainProps): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Point | undefined>(undefined);
+function Main({ city, activeCity }: MainProps): JSX.Element {
+  const activeSortOption = useAppSelector((state) => state.sort);
+  const offers = useAppSelector((state) => state.offers);
+  const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
+
+  const dispatch = useAppDispatch();
+
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
+  switch (activeSortOption) {
+    case 'Price: low to high':
+      sortByLowToHighPrice(selectedOffers);
+      break;
+    case 'Price: high to low':
+      sortByHighToLowPrice(selectedOffers);
+      break;
+    case 'Top rated first':
+      sortByRating(selectedOffers);
+      break;
+    default:
+      break;
+  }
+
+  function onSortOptionChange(sort: string) {
+    dispatch(changeSort(sort));
+  }
 
   function onCardHover(id: string | null) {
-    const currentPoint = points.find((point) => point.id === id);
+    const currentPoint = selectedOffers.find((point) => point.id === id);
     setActiveOffer(currentPoint);
   }
 
@@ -23,28 +50,13 @@ function Main({ rentalOffersCount, city, points }: MainProps): JSX.Element {
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{rentalOffersCount} places to stay in Amsterdam</b>
-        <form className="places__sorting" action="#" method="get">
-          <span className="places__sorting-caption">Sort by</span>
-          <span className="places__sorting-type" tabIndex={0}>
-            Popular
-            <svg className="places__sorting-arrow" width="7" height="4">
-              <use xlinkHref="#icon-arrow-select"></use>
-            </svg>
-          </span>
-          <ul className="places__options places__options--custom places__options--opened">
-            <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-            <li className="places__option" tabIndex={0}>Price: low to high</li>
-            <li className="places__option" tabIndex={0}>Price: high to low</li>
-            <li className="places__option" tabIndex={0}>Top rated first</li>
-          </ul>
-        </form>
-
+        <b className="places__found">{selectedOffers.length} places to stay in {activeCity}</b>
+        <Sort sorts={sorts} onSortChange={onSortOptionChange} activeSortOption={activeSortOption} />
         <div className="cities__places-list places__list tabs__content">
-          {POINTS.map((point) => (
+          {selectedOffers.map((offer) => (
             <CardItem
-              key={point.id}
-              point={point}
+              key={offer.id}
+              offer={offer}
               onCardHover={onCardHover}
               page={Page.Main}
             />
@@ -52,7 +64,7 @@ function Main({ rentalOffersCount, city, points }: MainProps): JSX.Element {
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city={city} points={points} page={Page.Main} selectedPoint={activeOffer} />
+        <Map city={city} offers={selectedOffers} page={Page.Main} selectedOffer={activeOffer} />
       </div>
     </div>
   );

@@ -3,17 +3,17 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
-import { City, Point } from '../../types/types';
-import { Page, AuthorizationStatus, firstOffer, threeFirstPoints, offerReviews, Setting } from '../../const';
+import { City, Offer } from '../../types/types';
+import { Page, AuthorizationStatus, firstOffer, threeFirstOffers, offerReviews, Setting } from '../../const';
 import CardItem from '../../components/card/card-item';
 
 type OfferPageProps = {
   city: City;
-  selectedPoint: Point | undefined;
+  selectedOffer: Offer | undefined;
   authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({ city, selectedPoint, authorizationStatus }: OfferPageProps): JSX.Element {
+function OfferPage({ city, selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
 
   return (
     <div className="page">
@@ -156,16 +156,16 @@ function OfferPage({ city, selectedPoint, authorizationStatus }: OfferPageProps)
               </section>
             </div>
           </div>
-          <Map city={city} points={threeFirstPoints} page={Page.OfferMap} selectedPoint={selectedPoint} />
+          <Map city={city} offers={threeFirstOffers} page={Page.OfferMap} selectedOffer={selectedOffer} />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {threeFirstPoints.map((point) => (
+              {threeFirstOffers.map((offer) => (
                 <CardItem
-                  key={point.id}
-                  point={point}
+                  key={offer.id}
+                  point={offer}
                   page={Page.Offer}
                 />
               ))}

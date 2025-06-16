@@ -7,26 +7,24 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { City, Point, Points } from '../../types/types';
+import { City, Offer } from '../../types/types';
 
 type Cities = string[];
 
 type AppProps = {
-  rentalOffersCount: number;
   cities: Cities;
   city: City;
-  points: Points;
-  selectedPoint?: Point | undefined;
+  selectedOffer?: Offer | undefined;
 }
 
-function App({ rentalOffersCount, cities, city, points, selectedPoint }: AppProps): JSX.Element {
+function App({ cities, city, selectedOffer }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage rentalOffersCount={rentalOffersCount} cities={cities} city={city} points={points} />}
+            element={<MainPage cities={cities} city={city} />}
           />
           <Route
             path={AppRoute.Login}
@@ -44,11 +42,11 @@ function App({ rentalOffersCount, cities, city, points, selectedPoint }: AppProp
           />
           <Route
             path='offer'
-            element={<OfferPage city={city} selectedPoint={selectedPoint} authorizationStatus={AuthorizationStatus.Auth} />}
+            element={<OfferPage city={city} selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
           >
             <Route
               path={AppRoute.Offer}
-              element={<OfferPage city={city} selectedPoint={selectedPoint} authorizationStatus={AuthorizationStatus.Auth} />}
+              element={<OfferPage city={city} selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
             />
           </Route>
           <Route
