@@ -165,7 +165,7 @@ function OfferPage({ city, selectedOffer, authorizationStatus }: OfferPageProps)
               {threeFirstOffers.map((offer) => (
                 <CardItem
                   key={offer.id}
-                  point={offer}
+                  offer={offer}
                   page={Page.Offer}
                 />
               ))}
