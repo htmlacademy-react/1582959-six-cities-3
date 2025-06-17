@@ -24,7 +24,7 @@ function App({ cities, city, selectedOffer }: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage cities={cities} city={city} />}
+            element={<MainPage cities={cities} city={city} authorizationStatus={AuthorizationStatus.Auth}/>}
           />
           <Route
             path={AppRoute.Login}

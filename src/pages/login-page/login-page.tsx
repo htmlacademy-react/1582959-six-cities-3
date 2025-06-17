@@ -1,7 +1,18 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
+import { AppRoute, cities } from '../../const';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { changeCity } from '../../store/action';
 
 function LoginPage(): JSX.Element {
+  const randomCity = cities[Math.floor(Math.random() * cities.length)];
+
+  const dispatch = useAppDispatch();
+
+  function onCityClick(city: string) {
+    dispatch(changeCity(city));
+  }
   return (
     <div className="page page--gray page--login">
       <Helmet>
@@ -33,9 +44,9 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={() => onCityClick(randomCity)}>
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

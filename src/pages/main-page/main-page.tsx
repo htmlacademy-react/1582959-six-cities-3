@@ -4,23 +4,29 @@ import { changeCity } from '../../store/action';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
 import { City } from '../../types/types';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
 import { offers } from '../../mocks/offers';
+import { Navigate } from 'react-router-dom';
 
 type MainPageProps = {
   cities: string[];
   city: City;
+  authorizationStatus: AuthorizationStatus;
 }
 
-function MainPage({ cities, city }: MainPageProps): JSX.Element {
+function MainPage({ cities, city, authorizationStatus }: MainPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
   const dispatch = useAppDispatch();
 
   function onCityChange(newCity: string) {
     dispatch(changeCity(newCity));
+  }
+
+  if (authorizationStatus === AuthorizationStatus.NoAuth) {
+    return <Navigate to={AppRoute.Login} />;
   }
 
   return (
