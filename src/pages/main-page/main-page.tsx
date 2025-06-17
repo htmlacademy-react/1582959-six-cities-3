@@ -7,6 +7,7 @@ import { City } from '../../types/types';
 import { AuthorizationStatus } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
+import { offers } from '../../mocks/offers';
 
 type MainPageProps = {
   cities: string[];
@@ -15,7 +16,6 @@ type MainPageProps = {
 
 function MainPage({ cities, city }: MainPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
   const dispatch = useAppDispatch();
 

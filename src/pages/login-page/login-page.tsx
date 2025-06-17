@@ -1,4 +1,4 @@
-import {Helmet} from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 
 function LoginPage(): JSX.Element {
@@ -10,7 +10,7 @@ function LoginPage(): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <Logo/>
+            <Logo />
           </div>
         </div>
       </header>
@@ -22,11 +22,11 @@ function LoginPage(): JSX.Element {
             <form className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required/>
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required/>
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" pattern="^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{2,}$" title="Пароль должен содержать хотя бы одну букву и цифру." required />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
