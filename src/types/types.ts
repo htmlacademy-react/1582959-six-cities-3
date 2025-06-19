@@ -4,11 +4,6 @@ export type Offer = {
   type: string;
   price: number;
   city: City;
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
@@ -42,23 +37,5 @@ export type City = {
   longitude: number;
   zoom: number;
 };
-
-export type Point = {
-  id: string;
-  isPremium: boolean;
-  previewImage: string;
-  price: number;
-  city: {
-    name: string;
-    latitude: number;
-    longitude: number;
-  };
-  isFavorite: boolean;
-  rating: number;
-  title: string;
-  type: string;
-};
-
-export type Points = Point[];
 
 export type CardLocation = 'cities' | 'favorites' | 'near-places';
