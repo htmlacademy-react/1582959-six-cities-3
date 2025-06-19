@@ -156,7 +156,7 @@ function OfferPage({ city, selectedOffer, authorizationStatus }: OfferPageProps)
               </section>
             </div>
           </div>
-          <Map city={city} offers={threeFirstOffers} page={Page.OfferMap} selectedOffer={selectedOffer} />
+          <Map city={city} page={Page.OfferMap} selectedOffer={selectedOffer} />
         </section>
         <div className="container">
           <section className="near-places places">

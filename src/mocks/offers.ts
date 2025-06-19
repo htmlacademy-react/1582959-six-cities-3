@@ -8,6 +8,13 @@ export const offers: Offers = [
     price: 120,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 8,
+      },
+    },
+    location: {
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
       zoom: 8,
@@ -24,6 +31,13 @@ export const offers: Offers = [
     price: 80,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+    },
+    location: {
       latitude: 52.3609553943508,
       longitude: 4.85309666406198,
       zoom: 10,
@@ -40,6 +54,13 @@ export const offers: Offers = [
     price: 132,
     city: {
       name: 'Hamburg',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
+        zoom: 8,
+      },
+    },
+    location: {
       latitude: 52.3909553943508,
       longitude: 4.929309666406198,
       zoom: 8,
@@ -56,6 +77,13 @@ export const offers: Offers = [
     price: 180,
     city: {
       name: 'Paris',
+      location: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+        zoom: 10,
+      },
+    },
+    location: {
       latitude: 52.3809553943508,
       longitude: 4.939309666406198,
       zoom: 10,

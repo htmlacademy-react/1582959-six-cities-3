@@ -61,6 +61,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export const PIN_MARKER_DEFAULT = 'img/pin.svg';
 
 export const PIN_MARKER_CURRENT = 'img/pin-active.svg';
