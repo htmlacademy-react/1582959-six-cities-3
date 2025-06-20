@@ -1,4 +1,4 @@
-import { Rating } from './types/types';
+import { Rating, City } from './types/types';
 import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { sortByDate } from './utils';
@@ -66,6 +66,57 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const centers: City[] = [
+  {
+    name: 'Paris',
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 13
+    }
+  },
+  {
+    name: 'Cologne',
+    location: {
+      latitude: 50.938361,
+      longitude: 6.959974,
+      zoom: 13
+    }
+  },
+  {
+    name: 'Brussels',
+    location: {
+      latitude: 50.846557,
+      longitude: 4.351697,
+      zoom: 13
+    }
+  },
+  {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: 13
+    }
+  },
+  {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.550341,
+      longitude: 10.000654,
+      zoom: 13
+    }
+  },
+  {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.225402,
+      longitude: 6.776314,
+      zoom: 13
+    }
+  }
+];
 
 export const PIN_MARKER_DEFAULT = 'img/pin.svg';
 

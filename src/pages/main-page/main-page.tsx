@@ -3,26 +3,27 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity} from '../../store/action';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
-import { City } from '../../types/types';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, centers } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
 import { Navigate } from 'react-router-dom';
 
 type MainPageProps = {
   cities: string[];
-  city: City;
   authorizationStatus: AuthorizationStatus;
 }
 
-function MainPage({ cities, city, authorizationStatus }: MainPageProps): JSX.Element {
+function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
+  const cityMap = centers.find((city) => city.name === activeCity);
+  if (!cityMap) {
+    throw new Error(`Город ${activeCity} не найден`);
+  }
 
   function onCityChange(newCity: string) {
     dispatch(changeCity(newCity));
-
   }
 
   if (authorizationStatus === AuthorizationStatus.NoAuth) {
@@ -43,7 +44,7 @@ function MainPage({ cities, city, authorizationStatus }: MainPageProps): JSX.Ele
         </div>
         <div className="cities">
           {offers.length !== 0 ?
-            <Main city={city} activeCity={activeCity} /> :
+            <Main city={cityMap} activeCity={activeCity} /> :
             <MainEmpty activeCity={activeCity} />}
         </div>
       </main>

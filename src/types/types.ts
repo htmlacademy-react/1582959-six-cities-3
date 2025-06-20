@@ -3,14 +3,7 @@ export type Offer = {
   title: string;
   type: string;
   price: number;
-  city: {
-    name: string;
-    location: {
-      latitude: number;
-      longitude: number;
-      zoom: number;
-    };
-  };
+  city: City;
   location: {
     latitude: number;
     longitude: number;
@@ -45,9 +38,11 @@ export type Rating = {
 
 export type City = {
   name: string;
-  latitude: number;
-  longitude: number;
-  zoom: number;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
 };
 
 export type CardLocation = 'cities' | 'favorites' | 'near-places';

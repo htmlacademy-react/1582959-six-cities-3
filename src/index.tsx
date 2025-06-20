@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { cities } from './const';
-import { CITY } from './mocks/city';
 import { store } from './store';
 import { fetchOfferAction } from './store/api-actions';
 
@@ -18,7 +17,6 @@ root.render(
     <Provider store={store}>
       <App
         cities={cities}
-        city={CITY}
       />
     </Provider>
   </React.StrictMode>

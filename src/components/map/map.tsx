@@ -40,6 +40,14 @@ function Map({ city, page, selectedOffer }: MapProps): JSX.Element {
           lng: offer.location.longitude
         });
 
+        map.setView(
+          {
+            lat: city.location.latitude,
+            lng: city.location.longitude
+          },
+          city.location.zoom
+        );
+
         marker
           .setIcon(
             selectedOffer !== undefined && offer.id === selectedOffer.id
@@ -53,7 +61,7 @@ function Map({ city, page, selectedOffer }: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOffer, city]);
 
   return <section className={`${page}__map map`} ref={mapRef}></section>;
 }

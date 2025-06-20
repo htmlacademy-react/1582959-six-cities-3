@@ -3,17 +3,22 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
-import { City, Offer } from '../../types/types';
-import { Page, AuthorizationStatus, firstOffer, threeFirstOffers, offerReviews, Setting } from '../../const';
+import { Offer } from '../../types/types';
+import { Page, AuthorizationStatus, firstOffer, threeFirstOffers, offerReviews, Setting, centers } from '../../const';
 import CardItem from '../../components/card/card-item';
+import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
-  city: City;
   selectedOffer: Offer | undefined;
   authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({ city, selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
+function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
+  const activeCity = useAppSelector((state) => state.city);
+  const cityMap = centers.find((city) => city.name === activeCity);
+  if (!cityMap) {
+    throw new Error(`Город ${activeCity} не найден`);
+  }
 
   return (
     <div className="page">
@@ -156,7 +161,7 @@ function OfferPage({ city, selectedOffer, authorizationStatus }: OfferPageProps)
               </section>
             </div>
           </div>
-          <Map city={city} page={Page.OfferMap} selectedOffer={selectedOffer} />
+          <Map city={cityMap} page={Page.OfferMap} selectedOffer={selectedOffer} />
         </section>
         <div className="container">
           <section className="near-places places">

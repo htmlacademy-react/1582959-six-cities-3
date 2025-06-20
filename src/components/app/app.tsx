@@ -9,17 +9,16 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
-import { City, Offer } from '../../types/types';
+import { Offer } from '../../types/types';
 
 type Cities = string[];
 
 type AppProps = {
   cities: Cities;
-  city: City;
   selectedOffer?: Offer | undefined;
 }
 
-function App({ cities, city, selectedOffer }: AppProps): JSX.Element {
+function App({ cities,selectedOffer }: AppProps): JSX.Element {
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
   // authorizationStatus === AuthorizationStatus.Unknown ||
   if (isOffersLoading) {
@@ -34,7 +33,7 @@ function App({ cities, city, selectedOffer }: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage cities={cities} city={city} authorizationStatus={AuthorizationStatus.Auth}/>}
+            element={<MainPage cities={cities} authorizationStatus={AuthorizationStatus.Auth}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -52,11 +51,11 @@ function App({ cities, city, selectedOffer }: AppProps): JSX.Element {
           />
           <Route
             path='offer'
-            element={<OfferPage city={city} selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
+            element={<OfferPage selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
           >
             <Route
               path={AppRoute.Offer}
-              element={<OfferPage city={city} selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
+              element={<OfferPage selectedOffer={selectedOffer} authorizationStatus={AuthorizationStatus.Auth} />}
             />
           </Route>
           <Route
