@@ -64,7 +64,7 @@ function Main({ city, activeCity }: MainProps): JSX.Element {
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city={city} offers={selectedOffers} page={Page.Main} selectedOffer={activeOffer} />
+        <Map city={city} page={Page.Main} selectedOffer={activeOffer} />
       </div>
     </div>
   );

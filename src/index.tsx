@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { cities } from './const';
-import { CITY } from './mocks/city';
 import { store } from './store';
+import { fetchOfferAction } from './store/api-actions';
+
+store.dispatch(fetchOfferAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +17,6 @@ root.render(
     <Provider store={store}>
       <App
         cities={cities}
-        city={CITY}
       />
     </Provider>
   </React.StrictMode>
