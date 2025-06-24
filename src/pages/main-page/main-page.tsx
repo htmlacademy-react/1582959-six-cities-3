@@ -10,14 +10,14 @@ import { Navigate } from 'react-router-dom';
 
 type MainPageProps = {
   cities: string[];
-  authorizationStatus: AuthorizationStatus;
 }
 
-function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
+function MainPage({ cities }: MainPageProps): JSX.Element {
 
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const dispatch = useAppDispatch();
   const cityMap = centers.find((city) => city.name === activeCity);

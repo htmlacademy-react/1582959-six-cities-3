@@ -10,12 +10,13 @@ import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
-  authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
+function OfferPage({ selectedOffer }: OfferPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
   const premiumOffers = offers.filter((offer) => offer.isPremium);
   const firstOffer = premiumOffers.slice(0, 1)[0];

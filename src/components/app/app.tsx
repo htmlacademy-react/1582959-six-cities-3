@@ -1,6 +1,6 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import {useAppSelector} from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -18,7 +18,7 @@ type AppProps = {
   selectedOffer?: Offer | undefined;
 }
 
-function App({ cities,selectedOffer }: AppProps): JSX.Element {
+function App({ cities, selectedOffer }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isLoading = useAppSelector((state) => state.isLoading);
 
@@ -34,7 +34,7 @@ function App({ cities,selectedOffer }: AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage cities={cities} authorizationStatus={authorizationStatus}/>}
+            element={<MainPage cities={cities} />}
           />
           <Route
             path={AppRoute.Login}
@@ -52,11 +52,11 @@ function App({ cities,selectedOffer }: AppProps): JSX.Element {
           />
           <Route
             path='offer'
-            element={<OfferPage selectedOffer={selectedOffer} authorizationStatus={authorizationStatus} />}
+            element={<OfferPage selectedOffer={selectedOffer} />}
           >
             <Route
               path={AppRoute.Offer}
-              element={<OfferPage selectedOffer={selectedOffer} authorizationStatus={authorizationStatus} />}
+              element={<OfferPage selectedOffer={selectedOffer} />}
             />
           </Route>
           <Route
