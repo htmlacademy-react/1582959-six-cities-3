@@ -1,16 +1,11 @@
 import { Rating, City } from './types/types';
-import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { sortByDate } from './utils';
 
-export const favoritesOffers = offers.filter((offer) => offer.isFavorite);
-export const premiumOffers = offers.filter((offer) => offer.isPremium);
-export const firstOffer = premiumOffers.slice(0, 1)[0];
-export const threeFirstOffers = offers.slice(0, 3);
+
 export const offerReviews = sortByDate(reviews).slice(0, 10);
 
 export const Setting = {
-  FavoritesCount: favoritesOffers.length,
   ReviewsCount: offerReviews.length,
 };
 

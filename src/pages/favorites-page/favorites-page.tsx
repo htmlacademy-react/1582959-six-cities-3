@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AppRoute } from '../../const';
-import { favoritesOffers, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import Header from '../../components/header/header';
 import FavoritesLocations from '../../components/favorites/favorites-locations';
 import FavoritesEmpty from '../../components/favorites/favorites-empty';
+import { useAppSelector } from '../../hooks';
 
 function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
     <div className="page">

@@ -19,9 +19,9 @@ type AppProps = {
 }
 
 function App({ cities,selectedOffer }: AppProps): JSX.Element {
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const isLoading = useAppSelector((state) => state.isLoading);
   // authorizationStatus === AuthorizationStatus.Unknown ||
-  if (isOffersLoading) {
+  if (isLoading) {
     return (
       <Spinner />
     );

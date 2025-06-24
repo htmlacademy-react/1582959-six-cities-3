@@ -4,7 +4,7 @@ import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
 import { Offer } from '../../types/types';
-import { Page, AuthorizationStatus, firstOffer, threeFirstOffers, offerReviews, Setting, centers } from '../../const';
+import { Page, AuthorizationStatus, offerReviews, Setting, centers } from '../../const';
 import CardItem from '../../components/card/card-item';
 import { useAppSelector } from '../../hooks';
 
@@ -15,7 +15,13 @@ type OfferPageProps = {
 
 function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const premiumOffers = offers.filter((offer) => offer.isPremium);
+  const firstOffer = premiumOffers.slice(0, 1)[0];
+  const threeFirstOffers = selectedOffers.slice(0, 3);
   const cityMap = centers.find((city) => city.name === activeCity);
+
   if (!cityMap) {
     throw new Error(`Город ${activeCity} не найден`);
   }

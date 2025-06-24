@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../../components/logo/logo';
-import { Setting } from '../../const';
 import { Fragment } from 'react';
+import { useAppSelector } from '../../hooks';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
 function Header({ authorizationStatus }: HeaderProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
     <header className="header">
@@ -24,7 +26,7 @@ function Header({ authorizationStatus }: HeaderProps): JSX.Element {
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">{Setting.FavoritesCount}</span>
+                      <span className="header__favorite-count">{favoritesOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

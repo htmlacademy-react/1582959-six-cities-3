@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity} from '../../store/action';
+import { changeCity } from '../../store/action';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
 import { AppRoute, AuthorizationStatus, centers } from '../../const';
@@ -16,6 +16,8 @@ type MainPageProps = {
 function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
+
   const dispatch = useAppDispatch();
   const cityMap = centers.find((city) => city.name === activeCity);
   if (!cityMap) {
@@ -37,13 +39,13 @@ function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
       </Helmet>
       <Header authorizationStatus={AuthorizationStatus.Auth} />
 
-      <main className={`page__main page__main--index ${offers.length === 0 ? 'page__main--index-empty' : ''}`}>
+      <main className={`page__main page__main--index ${selectedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CitiesList cities={cities} activeCity={activeCity} onChangeCity={onCityChange} />
         </div>
         <div className="cities">
-          {offers.length !== 0 ?
+          {selectedOffers.length !== 0 ?
             <Main city={cityMap} activeCity={activeCity} /> :
             <MainEmpty activeCity={activeCity} />}
         </div>
