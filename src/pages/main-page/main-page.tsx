@@ -14,7 +14,6 @@ type MainPageProps = {
 }
 
 function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
-  // console.log(authorizationStatus);
 
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);

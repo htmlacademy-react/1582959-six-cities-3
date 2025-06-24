@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../../components/logo/logo';
 import { Fragment } from 'react';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/api-actions';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
@@ -11,6 +12,8 @@ type HeaderProps = {
 function Header({ authorizationStatus }: HeaderProps): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
+
+  const dispatch = useAppDispatch();
 
   return (
     <header className="header">
@@ -30,9 +33,15 @@ function Header({ authorizationStatus }: HeaderProps): JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <Link className="header__nav-link"
+                      onClick={(evt) => {
+                        evt.preventDefault();
+                        dispatch(logoutAction());
+                      }}
+                      to='/'
+                    >
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </Fragment> :
                 <li className="header__nav-item user">

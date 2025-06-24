@@ -2,8 +2,6 @@ import { Rating, City } from './types/types';
 import { reviews } from './mocks/reviews';
 import { sortByDate } from './utils';
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export const offerReviews = sortByDate(reviews).slice(0, 10);
 
 export const Setting = {

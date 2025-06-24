@@ -15,5 +15,3 @@ export const changeSort = createAction('sort/changeSort', (value: string) => ({
 }));
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
-
-export const setError = createAction<string | null>('offers/setError');
