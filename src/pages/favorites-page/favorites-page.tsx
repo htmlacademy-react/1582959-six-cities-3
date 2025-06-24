@@ -7,6 +7,10 @@ import FavoritesLocations from '../../components/favorites/favorites-locations';
 import FavoritesEmpty from '../../components/favorites/favorites-empty';
 import { useAppSelector } from '../../hooks';
 
+// type FavoritesPageProps = {
+//   authorizationStatus: AuthorizationStatus;
+// }
+
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
@@ -16,7 +20,7 @@ function FavoritesPage(): JSX.Element {
       <Helmet>
         <title>Избранное</title>
       </Helmet>
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header authorizationStatus={AuthorizationStatus.Unknown} />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

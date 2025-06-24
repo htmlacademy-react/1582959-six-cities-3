@@ -14,6 +14,8 @@ type MainPageProps = {
 }
 
 function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
+  // console.log(authorizationStatus);
+
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
@@ -37,7 +39,7 @@ function MainPage({ cities, authorizationStatus }: MainPageProps): JSX.Element {
       <Helmet>
         <title>Главная</title>
       </Helmet>
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header authorizationStatus={authorizationStatus} />
 
       <main className={`page__main page__main--index ${selectedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>

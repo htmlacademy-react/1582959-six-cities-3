@@ -31,7 +31,7 @@ function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.
       <Helmet>
         <title>Специальные предложения</title>
       </Helmet>
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header authorizationStatus={authorizationStatus} />
 
       <main className="page__main page__main--offer">
         <section className="offer">F
