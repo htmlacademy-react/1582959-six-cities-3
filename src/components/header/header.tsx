@@ -5,12 +5,10 @@ import { Fragment } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 
-type HeaderProps = {
-  authorizationStatus: AuthorizationStatus;
-}
-
-function Header({ authorizationStatus }: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   const dispatch = useAppDispatch();

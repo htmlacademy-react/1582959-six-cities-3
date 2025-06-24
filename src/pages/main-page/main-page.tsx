@@ -38,7 +38,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
       <Helmet>
         <title>Главная</title>
       </Helmet>
-      <Header authorizationStatus={authorizationStatus} />
+      <Header />
 
       <main className={`page__main page__main--index ${selectedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>

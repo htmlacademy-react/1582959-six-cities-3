@@ -8,7 +8,7 @@ import { useAppSelector } from '../../hooks';
 
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
@@ -17,7 +17,7 @@ function FavoritesPage(): JSX.Element {
       <Helmet>
         <title>Избранное</title>
       </Helmet>
-      <Header authorizationStatus={authorizationStatus} />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
