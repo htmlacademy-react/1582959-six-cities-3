@@ -8,6 +8,7 @@ import { logoutAction } from '../../store/api-actions';
 function Header(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const userData = useAppSelector((state) => state.userData);
 
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
@@ -24,9 +25,10 @@ function Header(): JSX.Element {
                 <Fragment>
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <div className="header__avatar-wrapper user__avatar-wrapper" >
+                        <img src={userData?.avatarUrl} />
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <span className="header__user-name user__name">{userData?.email}</span>
                       <span className="header__favorite-count">{favoritesOffers.length}</span>
                     </Link>
                   </li>

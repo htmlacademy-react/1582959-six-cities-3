@@ -3,10 +3,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
-import { AppRoute, AuthorizationStatus, centers } from '../../const';
+import { centers } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
-import { Navigate } from 'react-router-dom';
 
 type MainPageProps = {
   cities: string[];
@@ -17,7 +16,6 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const dispatch = useAppDispatch();
   const cityMap = centers.find((city) => city.name === activeCity);
@@ -27,10 +25,6 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
 
   function onCityChange(newCity: string) {
     dispatch(changeCity(newCity));
-  }
-
-  if (authorizationStatus === AuthorizationStatus.NoAuth) {
-    return <Navigate to={AppRoute.Login} />;
   }
 
   return (

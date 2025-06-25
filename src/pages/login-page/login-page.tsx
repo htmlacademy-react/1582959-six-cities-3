@@ -4,15 +4,14 @@ import { AppRoute, cities } from '../../const';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/action';
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, useState } from 'react';
 import { loginAction } from '../../store/api-actions';
 
 function LoginPage(): JSX.Element {
   const randomCity = cities[Math.floor(Math.random() * cities.length)];
-
-  const loginRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
+  const [email, setEmail] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -20,14 +19,21 @@ function LoginPage(): JSX.Element {
     dispatch(changeCity(city));
   }
 
+  const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(evt.target.value);
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null) {
       dispatch(loginAction({
-        login: loginRef.current.value,
+        email: emailRef.current.value,
         password: passwordRef.current.value
-      }));
+      }))
+        .then(() => {
+          navigate(AppRoute.Main);
+        });
     }
   };
 
@@ -52,10 +58,12 @@ function LoginPage(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input"
-                  ref={loginRef}
+                  ref={emailRef}
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={email}
+                  onChange={handleEmailChange}
                   required
                 />
               </div>
@@ -73,7 +81,6 @@ function LoginPage(): JSX.Element {
               </div>
               <button className="login__submit form__submit button"
                 type="submit"
-                onClick={() => navigate(AppRoute.Main)}
               >Sign in
               </button>
             </form>
