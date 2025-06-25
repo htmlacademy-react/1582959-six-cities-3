@@ -4,18 +4,25 @@ import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
 import { Offer } from '../../types/types';
-import { Page, AuthorizationStatus, firstOffer, threeFirstOffers, offerReviews, Setting, centers } from '../../const';
+import { Page, AuthorizationStatus, offerReviews, Setting, centers } from '../../const';
 import CardItem from '../../components/card/card-item';
 import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
   selectedOffer: Offer | undefined;
-  authorizationStatus: AuthorizationStatus;
 };
 
-function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.Element {
+function OfferPage({ selectedOffer }: OfferPageProps): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const premiumOffers = offers.filter((offer) => offer.isPremium);
+  const firstOffer = premiumOffers.slice(0, 1)[0];
+  const threeFirstOffers = selectedOffers.slice(0, 3);
   const cityMap = centers.find((city) => city.name === activeCity);
+
   if (!cityMap) {
     throw new Error(`Город ${activeCity} не найден`);
   }
@@ -25,7 +32,7 @@ function OfferPage({ selectedOffer, authorizationStatus }: OfferPageProps): JSX.
       <Helmet>
         <title>Специальные предложения</title>
       </Helmet>
-      <Header authorizationStatus={AuthorizationStatus.Auth} />
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">F

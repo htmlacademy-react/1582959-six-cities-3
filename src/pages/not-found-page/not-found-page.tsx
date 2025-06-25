@@ -1,5 +1,8 @@
-import {Helmet} from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
+import './not-found-page.css';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -10,7 +13,7 @@ function NotFoundPage(): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <Logo/>
+            <Logo />
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
@@ -31,8 +34,8 @@ function NotFoundPage(): JSX.Element {
           <div className="cities__places-container cities__places-container--empty container">
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
-                <h1 style={{color: 'red'}}>404. Page not found</h1>
-                <a href="/" style={{color: 'blue'}}>Вернуться на главную</a>
+                <h1 className="not_found_error">404. Page not found</h1>
+                <Link className="not_found_link" to={AppRoute.Main}>Вернуться на главную</Link>
               </div>
             </section>
             <div className="cities__right-section"></div>

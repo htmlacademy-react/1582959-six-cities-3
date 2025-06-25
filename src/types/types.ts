@@ -46,3 +46,16 @@ export type City = {
 };
 
 export type CardLocation = 'cities' | 'favorites' | 'near-places';
+
+export type AuthData = {
+  email: string;
+  password: string;
+};
+
+export type UserData = AuthData & {
+  name: string;
+  avatarUrl: string;
+  email: string;
+  isPro: boolean;
+  token: string;
+};
