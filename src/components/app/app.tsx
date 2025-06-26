@@ -9,16 +9,14 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
-import { Offer } from '../../types/types';
 
 type Cities = string[];
 
 type AppProps = {
   cities: Cities;
-  selectedOffer?: Offer | undefined;
 }
 
-function App({ cities, selectedOffer }: AppProps): JSX.Element {
+function App({ cities }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isLoading = useAppSelector((state) => state.isLoading);
 
@@ -50,11 +48,11 @@ function App({ cities, selectedOffer }: AppProps): JSX.Element {
           />
           <Route
             path='offer'
-            element={<OfferPage selectedOffer={selectedOffer} />}
+            element={<OfferPage />}
           >
             <Route
               path={AppRoute.Offer}
-              element={<OfferPage selectedOffer={selectedOffer} />}
+              element={<OfferPage />}
             />
           </Route>
           <Route

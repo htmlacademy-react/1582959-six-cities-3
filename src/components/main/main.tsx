@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSort } from '../../store/action';
-import { City, Offer } from '../../types/types';
+import { City, OfferItem } from '../../types/types';
 import Map from '../../components/map/map';
 import CardItem from '../../components/card/card-item';
 import { sorts } from '../../const';
@@ -21,7 +21,8 @@ function Main({ city, activeCity }: MainProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<OfferItem | undefined>(undefined);
+  // console.log(activeOffer?.id);
 
   switch (activeSortOption) {
     case 'Price: low to high':

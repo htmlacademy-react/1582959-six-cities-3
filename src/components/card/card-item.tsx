@@ -1,14 +1,26 @@
 import { Link } from 'react-router-dom';
-import { CardLocation, Offer } from '../../types/types';
+import { CardLocation, OfferItem } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { toggleFavorite } from '../../store/action';
 
 type CardItemProps = {
-  offer: Offer;
+  offer: OfferItem;
   onCardHover?: (id: string | null) => void;
   page: CardLocation;
 };
 
 function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
-  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
+  const { id, isPremium, previewImage, price, rating, title, type } = offer;
+
+  const dispatch = useAppDispatch();
+  const favoriteIds = useAppSelector((state) => state.favoriteIds);
+  const isFavorite = favoriteIds.includes(id);
+console.log(favoriteIds);
+
+  const handleToggleFavorite = () => {
+    dispatch(toggleFavorite(id));
+  };
+
   const addCardId = () => {
     onCardHover?.(id);
   };
@@ -40,7 +52,9 @@ function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button">
+          <button className={`place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`} type="button"
+            onClick={handleToggleFavorite}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
