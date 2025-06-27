@@ -22,7 +22,6 @@ function Main({ city, activeCity }: MainProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [activeOffer, setActiveOffer] = useState<OfferItem | undefined>(undefined);
-  // console.log(activeOffer?.id);
 
   switch (activeSortOption) {
     case 'Price: low to high':

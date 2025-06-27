@@ -13,8 +13,8 @@ type InitalState = {
   sort: string;
   isLoading: boolean;
   authorizationStatus: AuthorizationStatus;
-  favoriteIds: string[];
   userData: UserData | null;
+  // favoriteIds: string[];
 }
 
 const initialState: InitalState = {
@@ -25,7 +25,7 @@ const initialState: InitalState = {
   isLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
-  favoriteIds: [],
+  // favoriteIds: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -53,11 +53,10 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(toggleFavorite, (state, action) => {
       const offerId = action.payload;
-      const index = state.favoriteIds.indexOf(offerId);
-      if (index !== -1) {
-        state.favoriteIds.splice(index, 1);
-      } else {
-        state.favoriteIds.push(offerId);
+      const updatedOfferIndex = state.offers.findIndex((offer) => offer.id === offerId);
+
+      if (updatedOfferIndex !== -1) {
+        state.offers[updatedOfferIndex].isFavorite = !state.offers[updatedOfferIndex].isFavorite;
       }
     });
 });

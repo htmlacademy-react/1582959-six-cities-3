@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CardLocation, OfferItem } from '../../types/types';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { toggleFavorite } from '../../store/action';
 
 type CardItemProps = {
@@ -10,12 +10,9 @@ type CardItemProps = {
 };
 
 function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
-  const { id, isPremium, previewImage, price, rating, title, type } = offer;
+  const { id, isPremium, previewImage, isFavorite, price, rating, title, type } = offer;
 
   const dispatch = useAppDispatch();
-  const favoriteIds = useAppSelector((state) => state.favoriteIds);
-  const isFavorite = favoriteIds.includes(id);
-console.log(favoriteIds);
 
   const handleToggleFavorite = () => {
     dispatch(toggleFavorite(id));
