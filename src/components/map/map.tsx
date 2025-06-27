@@ -2,14 +2,14 @@ import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { useAppSelector } from '../../hooks';
 import useMap from '../../hooks/use-map';
-import { City, Offer } from '../../types/types';
+import { City, OfferItem } from '../../types/types';
 import { PIN_MARKER_DEFAULT, PIN_MARKER_CURRENT, Page } from '../../const';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: City;
   page: Page;
-  selectedOffer: Offer | undefined;
+  selectedOffer?: OfferItem | undefined;
 };
 
 const defaultCustomIcon = new Icon({

@@ -8,8 +8,6 @@ import { useAppSelector } from '../../hooks';
 
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -24,9 +22,7 @@ function FavoritesPage(): JSX.Element {
           {favoritesOffers.length !== 0 ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                <FavoritesLocations />
-              </ul>
+              <FavoritesLocations />
             </section>
             : <FavoritesEmpty />}
         </div>

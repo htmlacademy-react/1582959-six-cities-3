@@ -3,16 +3,11 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import ReviewItem from '../../components/review/review-item';
-import { Offer } from '../../types/types';
 import { Page, AuthorizationStatus, offerReviews, Setting, centers } from '../../const';
 import CardItem from '../../components/card/card-item';
 import { useAppSelector } from '../../hooks';
 
-type OfferPageProps = {
-  selectedOffer: Offer | undefined;
-};
-
-function OfferPage({ selectedOffer }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -168,7 +163,7 @@ function OfferPage({ selectedOffer }: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={cityMap} page={Page.OfferMap} selectedOffer={selectedOffer} />
+          <Map city={cityMap} page={Page.OfferMap} />
         </section>
         <div className="container">
           <section className="near-places places">
