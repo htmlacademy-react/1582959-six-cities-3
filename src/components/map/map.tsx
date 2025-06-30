@@ -44,9 +44,7 @@ function Map({ city, page, selectedOffer }: MapProps): JSX.Element {
           {
             lat: city.location.latitude,
             lng: city.location.longitude
-          },
-          city.location.zoom
-        );
+          });
 
         marker
           .setIcon(
