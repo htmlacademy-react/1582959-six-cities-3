@@ -72,3 +72,9 @@ export type UserData = AuthData & {
   isPro: boolean;
   token: string;
 };
+
+export type CommentData = {
+  id: string | undefined;
+  comment: string;
+  rating: number;
+};

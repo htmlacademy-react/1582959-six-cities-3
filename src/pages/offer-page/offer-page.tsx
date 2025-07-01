@@ -6,33 +6,33 @@ import ReviewList from '../../components/review/review-list';
 import { Page, AuthorizationStatus, centers, AppRoute } from '../../const';
 import CardItem from '../../components/card/card-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchOfferDetailedInformation, fetchNearPlaces } from '../../store/api-actions';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Spinner from '../../components/spinner/spinner';
+import { OfferList } from '../../types/types';
 
 function OfferPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.city);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const data = useAppSelector((state) => state.offerInformation);
-  const offerNearPlaces = useAppSelector((state) => state.offerNearPlaces.slice(0, 3));
+  const offersNearby = useAppSelector((state) => state.offerNearPlaces);
   const isLoading = useAppSelector((state) => state.isLoading);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const cityMap = centers.find((city) => city.name === activeCity);
 
   const { id } = useParams();
 
+  const cityMap = centers.find((city) => city.name === activeCity);
+  const selectedOffer = offers.find((offer) => offer.id === id);
+  const offerNearPlaces = offersNearby.slice(0, 3);
+  const offersOnMap: OfferList = offerNearPlaces.concat(selectedOffer ?? []);
+
   useEffect(() => {
-    if (!id) {
-      navigate(AppRoute.NotFound);
-      return;
-    }
     dispatch(fetchOfferDetailedInformation(id));
     dispatch(fetchNearPlaces(id));
-  }, [dispatch, id, navigate]);
+  }, [dispatch, id]);
 
   if (!cityMap) {
     return <p>Город не найден</p>;
@@ -150,7 +150,7 @@ function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={cityMap} page={Page.OfferMap} />
+          <Map city={cityMap} page={Page.OfferMap} offers={offersOnMap} selectedOffer={selectedOffer}/>
         </section>
         <div className="container">
           <section className="near-places places">

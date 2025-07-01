@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadOffers, loadReviews, changeSort, toggleFavorite, requireAuthorization, setUserData, setOffersDataLoadingStatus, setOfferDetailedInformation, setOfferNearPlaces } from './action';
+import { changeCity, loadOffers, loadReviews, changeSort, toggleFavorite, requireAuthorization, setUserData, setOffersDataLoadingStatus, setOfferDetailedInformation, setOfferNearPlaces, addReview, setRating, setComment } from './action';
 import { cities, sorts, AuthorizationStatus } from '../const';
-import { Offer, OfferList, Reviews, UserData } from '../types/types';
+import { Offer, OfferList, Review, Reviews, UserData } from '../types/types';
 
 const DEFAULT_CITY = cities[0];
 const DEFAULT_SORT = sorts[0];
@@ -11,12 +11,14 @@ type InitalState = {
   offers: OfferList;
   offerNearPlaces: OfferList;
   offerInformation: Offer | null;
+  review: Review;
   reviews: Reviews;
   sort: string;
   isLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
-  // favoriteIds: string[];
+  rating: number;
+  comment: string;
 }
 
 const initialState: InitalState = {
@@ -25,11 +27,23 @@ const initialState: InitalState = {
   offerNearPlaces: [],
   offerInformation: null,
   reviews: [],
+  review: {
+    id: '',
+    date: '',
+    user: {
+      name: '',
+      avatarUrl: '',
+      isPro: false,
+    },
+    comment: '',
+    rating: 0,
+  },
   sort: DEFAULT_SORT,
   isLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
-  // favoriteIds: [],
+  rating: 0,
+  comment: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -68,5 +82,14 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOfferNearPlaces, (state, action) => {
       state.offerNearPlaces = action.payload;
+    })
+    .addCase(setRating, (state, action) => {
+      state.rating = action.payload;
+    })
+    .addCase(setComment, (state, action) => {
+      state.comment = action.payload;
+    })
+    .addCase(addReview, (state, action) => {
+      state.review = action.payload;
     });
 });
