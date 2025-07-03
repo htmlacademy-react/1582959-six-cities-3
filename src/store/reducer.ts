@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadOffers, loadReviews, changeSort, toggleFavorite, requireAuthorization, setUserData, setOffersDataLoadingStatus, setOfferDetailedInformation, setOfferNearPlaces, addReview, setRating, setComment } from './action';
+import { changeCity, loadOffers, loadReviews, changeSort, toggleFavorite, requireAuthorization, setUserData, setOffersDataLoadingStatus, setOfferDetailedInformation, setOfferNearPlaces, addReview, setRating, setComment, setFavoriteOffers } from './action';
 import { cities, sorts, AuthorizationStatus } from '../const';
-import { Offer, OfferList, Review, Reviews, UserData } from '../types/types';
+import { CommentData, Offer, OfferList, Reviews, UserData } from '../types/types';
 
 const DEFAULT_CITY = cities[0];
 const DEFAULT_SORT = sorts[0];
@@ -11,14 +11,13 @@ type InitalState = {
   offers: OfferList;
   offerNearPlaces: OfferList;
   offerInformation: Offer | null;
-  review: Review;
+  review: CommentData;
   reviews: Reviews;
   sort: string;
   isLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
-  rating: number;
-  comment: string;
+  favoriteOffers: OfferList;
 }
 
 const initialState: InitalState = {
@@ -29,12 +28,6 @@ const initialState: InitalState = {
   reviews: [],
   review: {
     id: '',
-    date: '',
-    user: {
-      name: '',
-      avatarUrl: '',
-      isPro: false,
-    },
     comment: '',
     rating: 0,
   },
@@ -42,8 +35,7 @@ const initialState: InitalState = {
   isLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
-  rating: 0,
-  comment: '',
+  favoriteOffers: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -84,12 +76,15 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offerNearPlaces = action.payload;
     })
     .addCase(setRating, (state, action) => {
-      state.rating = action.payload;
+      state.review.rating = action.payload;
     })
     .addCase(setComment, (state, action) => {
-      state.comment = action.payload;
+      state.review.comment = action.payload;
     })
     .addCase(addReview, (state, action) => {
       state.review = action.payload;
+    })
+    .addCase(setFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
     });
 });

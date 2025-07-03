@@ -11,10 +11,10 @@ import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../
 
 type MainProps = {
   city: City;
-  activeCity: string;
 }
 
-function Main({ city, activeCity }: MainProps): JSX.Element {
+function Main({ city }: MainProps): JSX.Element {
+  const activeCity = useAppSelector((state) => state.city);
   const activeSortOption = useAppSelector((state) => state.sort);
   const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);

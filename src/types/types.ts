@@ -74,7 +74,12 @@ export type UserData = AuthData & {
 };
 
 export type CommentData = {
-  id: string | undefined;
+  id: string;
   comment: string;
   rating: number;
 };
+
+export type FavoriteData = {
+  id: string;
+  isFavorite: boolean;
+}

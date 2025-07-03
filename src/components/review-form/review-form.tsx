@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent } from 'react';
+import { FormEvent, ChangeEvent, useRef } from 'react';
 import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
@@ -7,25 +7,38 @@ import { useParams } from 'react-router-dom';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const rating = useAppSelector((state) => state.rating);
-  const comment = useAppSelector((state) => state.comment);
-  const isValid = () => rating > 0 && comment.length >= 50;
+  const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const rating = useAppSelector((state) => state.review.rating);
+  const comment = useAppSelector((state) => state.review.comment);
+  const isValid = () => rating > 0 && comment.length >= 50 && comment.length <= 300;
   const { id } = useParams();
 
   const onRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newRating = Number(evt.target.value);
     dispatch(setRating(newRating));
   };
-  const onTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    const newComment = evt.target.value;
+
+  const onTextChange = () => {
+    const newComment = commentInputRef.current!.value;
     dispatch(setComment(newComment));
   };
+
   const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (!isValid()) {
       return;
     }
-    dispatch(postReview({ id, comment, rating }));
+    dispatch(postReview({
+      id: id ?? '',
+      comment: commentInputRef.current!.value,
+      rating: rating,
+    }));
+    commentInputRef.current!.value = '';
+    const starsRating = document.querySelectorAll('.form__rating-input');
+    starsRating.forEach((star) => {
+      const element = star as HTMLInputElement;
+      element.checked = false;
+    });
   };
 
   return (
@@ -51,6 +64,7 @@ function ReviewForm(): JSX.Element {
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={onTextChange}
+        ref={commentInputRef}
       >
       </textarea>
       <div className="reviews__button-wrapper">
