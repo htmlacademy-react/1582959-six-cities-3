@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSort } from '../../store/action';
-import { City, Offer } from '../../types/types';
+import { City, OfferItem } from '../../types/types';
 import Map from '../../components/map/map';
 import CardItem from '../../components/card/card-item';
 import { sorts } from '../../const';
@@ -11,17 +11,17 @@ import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../
 
 type MainProps = {
   city: City;
-  activeCity: string;
 }
 
-function Main({ city, activeCity }: MainProps): JSX.Element {
+function Main({ city }: MainProps): JSX.Element {
+  const activeCity = useAppSelector((state) => state.city);
   const activeSortOption = useAppSelector((state) => state.sort);
   const offers = useAppSelector((state) => state.offers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
 
   const dispatch = useAppDispatch();
 
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<OfferItem | undefined>(undefined);
 
   switch (activeSortOption) {
     case 'Price: low to high':
@@ -64,7 +64,7 @@ function Main({ city, activeCity }: MainProps): JSX.Element {
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city={city} page={Page.Main} selectedOffer={activeOffer} />
+        <Map city={city} page={Page.Main} selectedOffer={activeOffer} offers={selectedOffers}/>
       </div>
     </div>
   );

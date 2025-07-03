@@ -1,4 +1,4 @@
-export type Offer = {
+export type OfferItem = {
   id: string;
   title: string;
   type: string;
@@ -15,7 +15,20 @@ export type Offer = {
   previewImage: string;
 };
 
-export type Offers = Offer[];
+export type OfferList = OfferItem[];
+
+export type Offer = OfferItem & {
+  description: string;
+  bedrooms: number;
+  goods: [string];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: [string];
+  maxAdults: number;
+}
 
 export type Review = {
   id: string;
@@ -59,3 +72,14 @@ export type UserData = AuthData & {
   isPro: boolean;
   token: string;
 };
+
+export type CommentData = {
+  id: string;
+  comment: string;
+  rating: number;
+};
+
+export type FavoriteData = {
+  id: string;
+  isFavorite: boolean;
+}

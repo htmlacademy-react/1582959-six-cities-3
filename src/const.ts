@@ -1,12 +1,4 @@
 import { Rating, City } from './types/types';
-import { reviews } from './mocks/reviews';
-import { sortByDate } from './utils';
-
-export const offerReviews = sortByDate(reviews).slice(0, 10);
-
-export const Setting = {
-  ReviewsCount: offerReviews.length,
-};
 
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
@@ -46,7 +38,8 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
+  NotFound = '*',
 }
 
 export enum AuthorizationStatus {
@@ -57,6 +50,8 @@ export enum AuthorizationStatus {
 
 export enum APIRoute {
   Offers = '/offers',
+  Comments = '/comments',
+  Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout',
 }

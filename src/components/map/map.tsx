@@ -1,15 +1,16 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
 import useMap from '../../hooks/use-map';
-import { City, Offer } from '../../types/types';
+import { City, OfferItem, OfferList } from '../../types/types';
 import { PIN_MARKER_DEFAULT, PIN_MARKER_CURRENT, Page } from '../../const';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: City;
   page: Page;
-  selectedOffer: Offer | undefined;
+  offers: OfferList;
+  selectedOffer?: OfferItem | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,9 +25,9 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({ city, page, selectedOffer }: MapProps): JSX.Element {
+function Map({ city, page, offers, selectedOffer }: MapProps): JSX.Element {
 
-  const offers = useAppSelector((state) => state.offers);
+  // const offers = useAppSelector((state) => state.offers);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -44,9 +45,7 @@ function Map({ city, page, selectedOffer }: MapProps): JSX.Element {
           {
             lat: city.location.latitude,
             lng: city.location.longitude
-          },
-          city.location.zoom
-        );
+          });
 
         marker
           .setIcon(

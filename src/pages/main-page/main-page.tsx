@@ -41,7 +41,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
         </div>
         <div className="cities">
           {selectedOffers.length !== 0 ?
-            <Main city={cityMap} activeCity={activeCity} /> :
+            <Main city={cityMap} /> :
             <MainEmpty activeCity={activeCity} />}
         </div>
       </main>
