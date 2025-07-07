@@ -2,7 +2,11 @@ import { Rating, City } from './types/types';
 
 export const cities: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+export const DEFAULT_CITY = cities[0];
+
 export const sorts: string[] = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+export const DEFAULT_SORT = sorts[0];
 
 export enum Page {
   Main = 'cities',
@@ -110,3 +114,10 @@ export const centers: City[] = [
 export const PIN_MARKER_DEFAULT = 'img/pin.svg';
 
 export const PIN_MARKER_CURRENT = 'img/pin-active.svg';
+
+export enum NameSpace {
+  Data = 'DATA',
+  Review = 'REVIEW',
+  User = 'USER',
+  Change = 'CHANGE',
+}

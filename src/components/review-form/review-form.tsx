@@ -2,14 +2,15 @@ import { FormEvent, ChangeEvent, useRef } from 'react';
 import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
-import { setComment, setRating } from '../../store/action';
 import { useParams } from 'react-router-dom';
+import { setComment, setRating } from '../../store/user-review/user-review';
+import { getComment, getRating } from '../../store/user-review/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
-  const rating = useAppSelector((state) => state.review.rating);
-  const comment = useAppSelector((state) => state.review.comment);
+  const rating = useAppSelector(getRating);
+  const comment = useAppSelector(getComment);
   const isValid = () => rating > 0 && comment.length >= 50 && comment.length <= 300;
   const { id } = useParams();
 

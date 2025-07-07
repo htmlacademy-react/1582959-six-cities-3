@@ -1,11 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/change-slice/change-slice';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
 import { centers } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
+import { getActiveCity } from '../../store/change-slice/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 
 type MainPageProps = {
   cities: string[];
@@ -13,12 +15,13 @@ type MainPageProps = {
 
 function MainPage({ cities }: MainPageProps): JSX.Element {
 
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getOffers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
 
   const dispatch = useAppDispatch();
   const cityMap = centers.find((city) => city.name === activeCity);
+
   if (!cityMap) {
     throw new Error(`Город ${activeCity} не найден`);
   }

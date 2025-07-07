@@ -1,13 +1,14 @@
 import CardItem from '../card/card-item';
 import { Page } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/offers-data/selectors';
 
 type FavoritesList = {
   city?: string;
 }
 
 function FavoritesList({ city }: FavoritesList): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite && offer.city.name === city);
 
   return (

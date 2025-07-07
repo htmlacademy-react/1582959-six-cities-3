@@ -1,7 +1,7 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -9,6 +9,10 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import { getAuthCheckedStatus } from '../../store/user-process/selectors';
+import { getLoadingStatus } from '../../store/offers-data/selectors';
 
 type Cities = string[];
 
@@ -17,10 +21,10 @@ type AppProps = {
 }
 
 function App({ cities }: AppProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoading);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isLoading = useAppSelector(getLoadingStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isLoading) {
+  if (!isAuthChecked || isLoading) {
     return (
       <Spinner />
     );
@@ -28,7 +32,7 @@ function App({ cities }: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -60,7 +64,7 @@ function App({ cities }: AppProps): JSX.Element {
             element={<NotFoundPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

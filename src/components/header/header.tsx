@@ -4,11 +4,13 @@ import Logo from '../../components/logo/logo';
 import { Fragment } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getUserData } from '../../store/user-process/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function Header(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userData = useAppSelector((state) => state.userData);
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUserData);
 
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 

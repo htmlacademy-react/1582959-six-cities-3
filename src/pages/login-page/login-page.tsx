@@ -3,7 +3,7 @@ import Logo from '../../components/logo/logo';
 import { AppRoute, cities } from '../../const';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/change-slice/change-slice';
 import { useRef, FormEvent, useState } from 'react';
 import { loginAction } from '../../store/api-actions';
 
