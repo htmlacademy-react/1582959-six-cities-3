@@ -13,6 +13,7 @@ export type OffersData = {
     offerInformation: Offer | null;
     reviews: Reviews;
     isLoading: boolean;
+    hasError: boolean;
 };
 
 export type ReviewsState = {

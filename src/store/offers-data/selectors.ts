@@ -7,3 +7,4 @@ export const getOfferNearPlaces = (state: State): OfferList => state[NameSpace.D
 export const getOfferInformation = (state: State): Offer | null => state[NameSpace.Data].offerInformation;
 export const getReviews = (state: State): Reviews => state[NameSpace.Data].reviews;
 export const getLoadingStatus = (state: State): boolean => state[NameSpace.Data].isLoading;
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
