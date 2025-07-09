@@ -11,11 +11,13 @@ import { useEffect } from 'react';
 import { fetchOfferDetailedInformation, fetchNearPlaces } from '../../store/api-actions';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { OfferList } from '../../types/types';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getOfferInformation, getOfferNearPlaces } from '../../store/offers-data/selectors';
 
 function OfferPage(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const offerData = useAppSelector((state) => state.offerInformation);
-  const offersNearby = useAppSelector((state) => state.offerNearPlaces);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offerData = useAppSelector(getOfferInformation);
+  const offersNearby = useAppSelector(getOfferNearPlaces);
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
@@ -141,7 +143,7 @@ function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={cityMap} page={Page.OfferMap} offers={offersOnMap} selectedOffer={offerData}/>
+          <Map city={cityMap} page={Page.OfferMap} offers={offersOnMap} selectedOffer={offerData} />
         </section>
         <div className="container">
           <section className="near-places places">

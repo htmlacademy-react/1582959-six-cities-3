@@ -2,14 +2,16 @@ import { FormEvent, ChangeEvent, useRef } from 'react';
 import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
-import { setComment, setRating } from '../../store/action';
 import { useParams } from 'react-router-dom';
+import { setComment, setRating } from '../../store/user-review/user-review';
+import { getComment, getRating } from '../../store/user-review/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
-  const rating = useAppSelector((state) => state.review.rating);
-  const comment = useAppSelector((state) => state.review.comment);
+  const starsRefs = useRef<HTMLInputElement[] | null>([]);
+  const rating = useAppSelector(getRating);
+  const comment = useAppSelector(getComment);
   const isValid = () => rating > 0 && comment.length >= 50 && comment.length <= 300;
   const { id } = useParams();
 
@@ -34,11 +36,7 @@ function ReviewForm(): JSX.Element {
       rating: rating,
     }));
     commentInputRef.current!.value = '';
-    const starsRating = document.querySelectorAll('.form__rating-input');
-    starsRating.forEach((star) => {
-      const element = star as HTMLInputElement;
-      element.checked = false;
-    });
+    starsRefs.current?.forEach((star) => (star.checked = false));
   };
 
   return (
@@ -51,6 +49,12 @@ function ReviewForm(): JSX.Element {
               value={star.id} id={`${star.id}-star`}
               type="radio"
               onChange={onRatingChange}
+              ref={(el) => {
+                if (starsRefs.current === null) {
+                  starsRefs.current = [];
+                }
+                starsRefs.current.push(el!);
+              }}
             />
             <label htmlFor={`${star.id}-star`} className="reviews__rating-label form__rating-label" title={star.title}>
               <svg className="form__star-image" width="37" height="33">

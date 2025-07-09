@@ -2,10 +2,11 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewList } from '../../store/api-actions';
+import { getReviews } from '../../store/offers-data/selectors';
 
 function ReviewList(): JSX.Element {
 
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
   const offerReviews = reviews.slice(0, 10).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const dispatch = useAppDispatch();

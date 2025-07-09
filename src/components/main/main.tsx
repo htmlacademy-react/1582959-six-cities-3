@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSort } from '../../store/action';
 import { City, OfferItem } from '../../types/types';
 import Map from '../../components/map/map';
 import CardItem from '../../components/card/card-item';
@@ -8,15 +7,18 @@ import { sorts } from '../../const';
 import Sort from '../sort/sort';
 import { Page } from '../../const';
 import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../utils';
+import { getActiveCity, getActiveSortOption } from '../../store/change-slice/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
+import { changeSort } from '../../store/change-slice/change-slice';
 
 type MainProps = {
   city: City;
 }
 
 function Main({ city }: MainProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
-  const activeSortOption = useAppSelector((state) => state.sort);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector(getActiveCity);
+  const activeSortOption = useAppSelector(getActiveSortOption);
+  const offers = useAppSelector(getOffers);
   const selectedOffers = offers.filter((offer) => offer.city.name === activeCity);
 
   const dispatch = useAppDispatch();
@@ -64,7 +66,7 @@ function Main({ city }: MainProps): JSX.Element {
         </div>
       </section>
       <div className="cities__right-section">
-        <Map city={city} page={Page.Main} selectedOffer={activeOffer} offers={selectedOffers}/>
+        <Map city={city} page={Page.Main} selectedOffer={activeOffer} offers={selectedOffers} />
       </div>
     </div>
   );
