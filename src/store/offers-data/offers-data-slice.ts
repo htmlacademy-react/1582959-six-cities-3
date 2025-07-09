@@ -1,10 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
-import { OffersData } from '../../types/state';
+import { DEFAULT_CITY, DEFAULT_SORT, NameSpace } from '../../const';
 import { Offer, OfferList, Reviews } from '../../types/types';
 import { fetchOfferAction } from '../api-actions';
 
+type OffersData = {
+  city: string;
+  sort: string;
+  offers: OfferList;
+  offerNearPlaces: OfferList;
+  offerInformation: Offer | null;
+  reviews: Reviews;
+  isLoading: boolean;
+  hasError: boolean;
+};
+
 const initialState: OffersData = {
+  city: DEFAULT_CITY,
+  sort: DEFAULT_SORT,
   offers: [],
   offerNearPlaces: [],
   offerInformation: null,
@@ -13,18 +25,24 @@ const initialState: OffersData = {
   hasError: false,
 };
 
-export const offersData = createSlice({
+export const offersDataSlice = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
+    changeCity(state, action: PayloadAction<string>) {
+      state.city = action.payload;
+    },
+    changeSort(state, action: PayloadAction<string>) {
+      state.sort = action.payload;
+    },
     loadReviews(state, action: PayloadAction<Reviews>) {
       state.reviews = action.payload;
     },
-    setOfferDetailedInformation(state, action: PayloadAction<Offer | null>) {
-      state.offerInformation = action.payload;
-    },
     setOfferNearPlaces(state, action: PayloadAction<OfferList>) {
       state.offerNearPlaces = action.payload;
+    },
+    setOfferDetailedInformation(state, action: PayloadAction<Offer | null>) {
+      state.offerInformation = action.payload;
     },
   },
   extraReducers(builder) {
@@ -45,7 +63,8 @@ export const offersData = createSlice({
 });
 
 export const {
+  changeCity, changeSort,
   loadReviews,
-  setOfferDetailedInformation,
   setOfferNearPlaces,
-} = offersData.actions;
+  setOfferDetailedInformation
+} = offersDataSlice.actions;

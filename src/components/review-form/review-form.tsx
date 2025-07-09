@@ -3,7 +3,7 @@ import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
-import { setComment, setRating } from '../../store/user-review/user-review';
+import { setComment, setRating } from '../../store/user-review/user-review-slice';
 import { getComment, getRating } from '../../store/user-review/selectors';
 
 function ReviewForm(): JSX.Element {

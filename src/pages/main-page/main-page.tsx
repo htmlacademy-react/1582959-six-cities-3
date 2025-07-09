@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/change-slice/change-slice';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
 import { centers } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
-import { getActiveCity } from '../../store/change-slice/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getActiveCity, getOffers } from '../../store/offers-data/selectors';
+import { changeCity } from '../../store/offers-data/offers-data-slice';
 
 type MainPageProps = {
   cities: string[];

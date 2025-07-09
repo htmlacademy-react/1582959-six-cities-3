@@ -7,9 +7,8 @@ import { sorts } from '../../const';
 import Sort from '../sort/sort';
 import { Page } from '../../const';
 import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../utils';
-import { getActiveCity, getActiveSortOption } from '../../store/change-slice/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
-import { changeSort } from '../../store/change-slice/change-slice';
+import { getActiveCity, getActiveSortOption, getOffers } from '../../store/offers-data/selectors';
+import { changeSort } from '../../store/offers-data/offers-data-slice';
 
 type MainProps = {
   city: City;

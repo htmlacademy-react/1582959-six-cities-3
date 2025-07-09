@@ -9,7 +9,7 @@ import { getOffers } from '../../store/offers-data/selectors';
 
 function FavoritesPage(): JSX.Element {
   const offers = useAppSelector(getOffers);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
     <div className="page">
@@ -20,7 +20,7 @@ function FavoritesPage(): JSX.Element {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {favoritesOffers.length !== 0 ?
+          {favoriteOffers.length !== 0 ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <FavoritesLocations />

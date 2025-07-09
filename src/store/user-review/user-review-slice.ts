@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ReviewsState } from '../../types/state';
 import { NameSpace } from '../../const';
 import { CommentData } from '../../types/types';
+
+type ReviewsState = {
+  review: CommentData;
+};
 
 const initialState: ReviewsState = {
   review: {
@@ -11,7 +14,7 @@ const initialState: ReviewsState = {
   },
 };
 
-export const userReview = createSlice({
+export const userReviewSlice = createSlice({
   name: NameSpace.Review,
   initialState,
   reducers: {
@@ -27,4 +30,4 @@ export const userReview = createSlice({
   },
 });
 
-export const { setRating, setComment, addReview } = userReview.actions;
+export const { setRating, setComment, addReview } = userReviewSlice.actions;

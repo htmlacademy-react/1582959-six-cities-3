@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
-// import { useAppSelector } from '../../hooks';
 import useMap from '../../hooks/use-map';
 import { City, OfferItem, OfferList } from '../../types/types';
 import { PIN_MARKER_DEFAULT, PIN_MARKER_CURRENT, Page } from '../../const';
@@ -27,7 +26,6 @@ const currentCustomIcon = new Icon({
 
 function Map({ city, page, offers, selectedOffer }: MapProps): JSX.Element {
 
-  // const offers = useAppSelector((state) => state.offers);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 

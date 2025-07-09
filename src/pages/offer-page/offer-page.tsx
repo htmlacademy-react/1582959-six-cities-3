@@ -8,7 +8,7 @@ import CardItem from '../../components/card/card-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchOfferDetailedInformation, fetchNearPlaces } from '../../store/api-actions';
+import { fetchNearPlaces, fetchOfferDetailedInformation, toggleFavoriteStatus } from '../../store/api-actions';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { OfferList } from '../../types/types';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
@@ -26,9 +26,18 @@ function OfferPage(): JSX.Element {
   const offerNearPlaces = offersNearby.slice(0, 3);
   const offersOnMap: OfferList = offerNearPlaces.concat(offerData ?? []);
 
+  const handleToggleFavorite = () => {
+    if (!offerData) {
+      return;
+    }
+    dispatch(toggleFavoriteStatus({ id: offerData?.id, isFavorite: !offerData?.isFavorite }));
+  };
+
   useEffect(() => {
-    dispatch(fetchOfferDetailedInformation(id));
-    dispatch(fetchNearPlaces(id));
+    if (id !== undefined) {
+      dispatch(fetchOfferDetailedInformation(id));
+      dispatch(fetchNearPlaces(id));
+    }
   }, [dispatch, id]);
 
   if (!cityMap) {
@@ -70,7 +79,10 @@ function OfferPage(): JSX.Element {
                   {offerData?.title}
                 </h1>
                 {authorizationStatus === AuthorizationStatus.Auth ?
-                  <button className={`offer__bookmark-button button ${offerData?.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button">
+                  <button className={`offer__bookmark-button button ${offerData?.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+                    type="button"
+                    onClick={handleToggleFavorite}
+                  >
                     <svg className="offer__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>

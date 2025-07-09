@@ -9,11 +9,11 @@ type FavoritesList = {
 
 function FavoritesList({ city }: FavoritesList): JSX.Element {
   const offers = useAppSelector(getOffers);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite && offer.city.name === city);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite && offer.city.name === city);
 
   return (
     <div className="favorites__places">
-      {favoritesOffers.map((offer) => (
+      {favoriteOffers.map((offer) => (
         <CardItem
           key={offer.id}
           offer={offer}

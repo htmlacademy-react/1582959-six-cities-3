@@ -8,3 +8,5 @@ export const getOfferInformation = (state: State): Offer | null => state[NameSpa
 export const getReviews = (state: State): Reviews => state[NameSpace.Data].reviews;
 export const getLoadingStatus = (state: State): boolean => state[NameSpace.Data].isLoading;
 export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
+export const getActiveCity = (state: State): string => state[NameSpace.Data].city;
+export const getActiveSortOption = (state: State): string => state[NameSpace.Data].sort;

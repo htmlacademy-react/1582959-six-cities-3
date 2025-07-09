@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import FavoritesList from './favorites-list';
 import { AppRoute } from '../../const';
-import { changeCity } from '../../store/change-slice/change-slice';
 import { getOffers } from '../../store/offers-data/selectors';
+import { changeCity } from '../../store/offers-data/offers-data-slice';
 
 function FavoritesLocations(): JSX.Element {
   const offers = useAppSelector(getOffers);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
-  const favoriteCities = Array.from(new Set(favoritesOffers.map((offer) => offer.city.name)));
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteCities = Array.from(new Set(favoriteOffers.map((offer) => offer.city.name)));
 
   const dispatch = useAppDispatch();
 

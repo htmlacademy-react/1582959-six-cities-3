@@ -12,7 +12,7 @@ function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userData = useAppSelector(getUserData);
 
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   const dispatch = useAppDispatch();
 
@@ -31,7 +31,7 @@ function Header(): JSX.Element {
                         <img src={userData?.avatarUrl} />
                       </div>
                       <span className="header__user-name user__name">{userData?.email}</span>
-                      <span className="header__favorite-count">{favoritesOffers.length}</span>
+                      <span className="header__favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
