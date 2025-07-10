@@ -7,6 +7,7 @@ type OffersData = {
   city: string;
   sort: string;
   offers: OfferList;
+  favoriteOffers: OfferList;
   offerNearPlaces: OfferList;
   offerInformation: Offer | null;
   reviews: Reviews;
@@ -18,6 +19,7 @@ const initialState: OffersData = {
   city: DEFAULT_CITY,
   sort: DEFAULT_SORT,
   offers: [],
+  favoriteOffers: [],
   offerNearPlaces: [],
   offerInformation: null,
   reviews: [],
@@ -44,6 +46,9 @@ export const offersDataSlice = createSlice({
     setOfferDetailedInformation(state, action: PayloadAction<Offer | null>) {
       state.offerInformation = action.payload;
     },
+    setFavoriteOffers(state, action: PayloadAction<OfferList>) {
+      state.favoriteOffers = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -63,8 +68,10 @@ export const offersDataSlice = createSlice({
 });
 
 export const {
-  changeCity, changeSort,
+  changeCity,
+  changeSort,
   loadReviews,
   setOfferNearPlaces,
+  setFavoriteOffers,
   setOfferDetailedInformation
 } = offersDataSlice.actions;

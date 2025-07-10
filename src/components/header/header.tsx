@@ -1,20 +1,24 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../../components/logo/logo';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoriteOffers, logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getUserData } from '../../store/user-process/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
 
 function Header(): JSX.Element {
-  const offers = useAppSelector(getOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userData = useAppSelector(getUserData);
 
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [dispatch, authorizationStatus]);
 
   return (
     <header className="header">

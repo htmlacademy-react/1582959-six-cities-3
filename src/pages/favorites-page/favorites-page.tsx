@@ -4,12 +4,19 @@ import { AppRoute } from '../../const';
 import Header from '../../components/header/header';
 import FavoritesLocations from '../../components/favorites/favorites-locations';
 import FavoritesEmpty from '../../components/favorites/favorites-empty';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offers-data/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
+import { useEffect } from 'react';
+import { fetchFavoriteOffers } from '../../store/api-actions';
 
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
 
   return (
     <div className="page">

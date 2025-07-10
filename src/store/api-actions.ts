@@ -5,11 +5,11 @@ import { OfferList, AuthData, UserData, Offer, Reviews, CommentData, FavoriteDat
 import { redirectToRoute } from './action';
 import { saveToken, dropToken, getToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
-import { loadReviews, setOfferDetailedInformation, setOfferNearPlaces } from './offers-data/offers-data-slice.js';
+import { loadReviews, setFavoriteOffers, setOfferDetailedInformation, setOfferNearPlaces } from './offers-data/offers-data-slice.js';
 import { addReview, setComment, setRating } from './user-review/user-review-slice.js';
+import { toast } from 'react-toastify';
 
 export const fetchOfferAction = createAsyncThunk<OfferList, undefined, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -63,7 +63,6 @@ export const fetchReviewList = createAsyncThunk<void, string | undefined, {
 );
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -84,7 +83,6 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
 );
 
 export const loginAction = createAsyncThunk<UserData, AuthData, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -102,7 +100,6 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
@@ -125,6 +122,8 @@ export const postReview = createAsyncThunk<void,
         await api.post(`${APIRoute.Comments}/${id}`, { rating, comment });
         dispatch(addReview({ id, rating, comment }));
         dispatch(fetchReviewList(id));
+      } catch (err) {
+        toast.warn('Ошибка при отправке отзыва');
       } finally {
         dispatch(setRating(0));
         dispatch(setComment(''));
@@ -143,6 +142,22 @@ export const toggleFavoriteStatus = createAsyncThunk<OfferList, FavoriteData, {
       return data;
     } finally {
       dispatch(fetchOfferAction());
+    }
+  },
+);
+
+export const fetchFavoriteOffers = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchReviewList',
+  async (_, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.get<OfferList>(APIRoute.Favorite);
+      dispatch(setFavoriteOffers(data));
+    } catch {
+      throw new Error();
     }
   },
 );

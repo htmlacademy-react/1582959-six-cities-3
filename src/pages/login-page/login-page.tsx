@@ -1,13 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import { AppRoute, cities } from '../../const';
+import { AppRoute, AuthorizationStatus, cities } from '../../const';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { useRef, FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useRef, FormEvent, useState, useEffect } from 'react';
 import { loginAction } from '../../store/api-actions';
 import { changeCity } from '../../store/offers-data/offers-data-slice';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { redirectToRoute } from '../../store/action';
 
 function LoginPage(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const randomCity = cities[Math.floor(Math.random() * cities.length)];
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -15,7 +18,13 @@ function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  function onCityClick(city: string) {
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [dispatch, authorizationStatus]);
+
+  function handleCityClick(city: string) {
     dispatch(changeCity(city));
   }
 
@@ -87,7 +96,7 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main} onClick={() => onCityClick(randomCity)}>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={() => handleCityClick(randomCity)}>
                 <span>{randomCity}</span>
               </Link>
             </div>

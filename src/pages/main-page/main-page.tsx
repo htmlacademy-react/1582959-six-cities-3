@@ -25,7 +25,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
     throw new Error(`Город ${activeCity} не найден`);
   }
 
-  function onCityChange(newCity: string) {
+  function handleCityChange(newCity: string) {
     dispatch(changeCity(newCity));
   }
 
@@ -39,7 +39,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
       <main className={`page__main page__main--index ${selectedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList cities={cities} activeCity={activeCity} onChangeCity={onCityChange} />
+          <CitiesList cities={cities} activeCity={activeCity} onChangeCity={handleCityChange} />
         </div>
         <div className="cities">
           {selectedOffers.length !== 0 ?
