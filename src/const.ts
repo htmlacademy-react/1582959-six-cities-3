@@ -119,5 +119,4 @@ export enum NameSpace {
   Data = 'DATA',
   Review = 'REVIEW',
   User = 'USER',
-  Change = 'CHANGE',
 }

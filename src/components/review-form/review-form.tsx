@@ -3,44 +3,53 @@ import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
-import { setComment, setRating } from '../../store/user-review/user-review';
-import { getComment, getRating } from '../../store/user-review/selectors';
+import { setComment, setRating } from '../../store/user-review/user-review-slice';
+import { getComment, getRating, getReviewFormLoadingStatus } from '../../store/user-review/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
-  const starsRefs = useRef<HTMLInputElement[] | null>([]);
+  const starsRefs = useRef<HTMLInputElement[]>([]);
   const rating = useAppSelector(getRating);
   const comment = useAppSelector(getComment);
+  const isLoading = useAppSelector(getReviewFormLoadingStatus);
   const isValid = () => rating > 0 && comment.length >= 50 && comment.length <= 300;
   const { id } = useParams();
 
-  const onRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newRating = Number(evt.target.value);
     dispatch(setRating(newRating));
   };
 
-  const onTextChange = () => {
+  const handleTextChange = () => {
     const newComment = commentInputRef.current!.value;
     dispatch(setComment(newComment));
   };
 
-  const onFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (!isValid()) {
       return;
     }
-    dispatch(postReview({
-      id: id ?? '',
-      comment: commentInputRef.current!.value,
-      rating: rating,
-    }));
+    dispatch(
+      postReview({
+        id: id || '',
+        comment: commentInputRef.current!.value,
+        rating: rating
+      })
+    );
     commentInputRef.current!.value = '';
-    starsRefs.current?.forEach((star) => (star.checked = false));
+    starsRefs.current?.forEach((star) => {
+      if (star !== null) {
+        star.checked = false;
+      }
+    });
+    dispatch(setRating(0));
+    dispatch(setComment(''));
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={onFormSubmit}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {stars.map((star) => (
@@ -48,7 +57,7 @@ function ReviewForm(): JSX.Element {
             <input className="form__rating-input visually-hidden" name="rating"
               value={star.id} id={`${star.id}-star`}
               type="radio"
-              onChange={onRatingChange}
+              onChange={handleRatingChange}
               ref={(el) => {
                 if (starsRefs.current === null) {
                   starsRefs.current = [];
@@ -67,7 +76,7 @@ function ReviewForm(): JSX.Element {
       <textarea className="reviews__textarea form__textarea"
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={onTextChange}
+        onChange={handleTextChange}
         ref={commentInputRef}
       >
       </textarea>
@@ -79,7 +88,7 @@ function ReviewForm(): JSX.Element {
           <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit"
-          disabled={!isValid()}
+          disabled={isLoading || !isValid()}
         >Submit
         </button>
       </div>

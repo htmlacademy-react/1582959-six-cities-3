@@ -6,10 +6,9 @@ import CardItem from '../../components/card/card-item';
 import { sorts } from '../../const';
 import Sort from '../sort/sort';
 import { Page } from '../../const';
-import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from '../../utils';
-import { getActiveCity, getActiveSortOption } from '../../store/change-slice/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
-import { changeSort } from '../../store/change-slice/change-slice';
+import { sortByLowToHighPrice, sortByHighToLowPrice, sortByRating } from './utils';
+import { getActiveCity, getActiveSortOption, getOffers } from '../../store/offers-data/selectors';
+import { changeSort } from '../../store/offers-data/offers-data-slice';
 
 type MainProps = {
   city: City;
@@ -39,11 +38,11 @@ function Main({ city }: MainProps): JSX.Element {
       break;
   }
 
-  function onSortOptionChange(sort: string) {
+  function handleSortOptionChange(sort: string) {
     dispatch(changeSort(sort));
   }
 
-  function onCardHover(id: string | null) {
+  function handleCardHover(id: string | null) {
     const currentPoint = selectedOffers.find((point) => point.id === id);
     setActiveOffer(currentPoint);
   }
@@ -53,13 +52,13 @@ function Main({ city }: MainProps): JSX.Element {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{selectedOffers.length} places to stay in {activeCity}</b>
-        <Sort sorts={sorts} onSortChange={onSortOptionChange} activeSortOption={activeSortOption} />
+        <Sort sorts={sorts} onSortChange={handleSortOptionChange} activeSortOption={activeSortOption} />
         <div className="cities__places-list places__list tabs__content">
           {selectedOffers.map((offer) => (
             <CardItem
               key={offer.id}
               offer={offer}
-              onCardHover={onCardHover}
+              onCardHover={handleCardHover}
               page={Page.Main}
             />
           ))}

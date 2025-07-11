@@ -14,9 +14,7 @@ function ReviewList(): JSX.Element {
   const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchReviewList(id));
-    }
+    dispatch(fetchReviewList(id));
   }, [dispatch, id]);
 
   return (

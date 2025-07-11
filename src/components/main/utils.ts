@@ -1,4 +1,4 @@
-import { OfferList } from './types/types';
+import { OfferList } from '../../types/types';
 
 export const sortByLowToHighPrice = (offers: OfferList) => offers.sort((a, b) => a.price - b.price);
 

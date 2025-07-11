@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/change-slice/change-slice';
 import CitiesList from '../../components/cities-list/cities-list';
 import Header from '../../components/header/header';
 import { centers } from '../../const';
 import Main from '../../components/main/main';
 import MainEmpty from '../../components/main/main-empty';
-import { getActiveCity } from '../../store/change-slice/selectors';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getActiveCity, getOffers } from '../../store/offers-data/selectors';
+import { changeCity } from '../../store/offers-data/offers-data-slice';
 
 type MainPageProps = {
   cities: string[];
@@ -26,7 +25,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
     throw new Error(`Город ${activeCity} не найден`);
   }
 
-  function onCityChange(newCity: string) {
+  function handleCityChange(newCity: string) {
     dispatch(changeCity(newCity));
   }
 
@@ -40,7 +39,7 @@ function MainPage({ cities }: MainPageProps): JSX.Element {
       <main className={`page__main page__main--index ${selectedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList cities={cities} activeCity={activeCity} onChangeCity={onCityChange} />
+          <CitiesList cities={cities} activeCity={activeCity} onChangeCity={handleCityChange} />
         </div>
         <div className="cities">
           {selectedOffers.length !== 0 ?

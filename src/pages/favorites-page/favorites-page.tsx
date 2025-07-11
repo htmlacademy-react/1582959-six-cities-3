@@ -4,12 +4,19 @@ import { AppRoute } from '../../const';
 import Header from '../../components/header/header';
 import FavoritesLocations from '../../components/favorites/favorites-locations';
 import FavoritesEmpty from '../../components/favorites/favorites-empty';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offers-data/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
+import { useEffect } from 'react';
+import { fetchFavoriteOffers } from '../../store/api-actions';
 
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
 
   return (
     <div className="page">
@@ -20,7 +27,7 @@ function FavoritesPage(): JSX.Element {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {favoritesOffers.length !== 0 ?
+          {favoriteOffers.length !== 0 ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <FavoritesLocations />
