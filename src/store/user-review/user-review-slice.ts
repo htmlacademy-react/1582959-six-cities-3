@@ -4,6 +4,7 @@ import { CommentData } from '../../types/types';
 
 type ReviewsState = {
   review: CommentData;
+  isReviewFormLoading: boolean;
 };
 
 const initialState: ReviewsState = {
@@ -12,6 +13,7 @@ const initialState: ReviewsState = {
     comment: '',
     rating: 0,
   },
+  isReviewFormLoading: false,
 };
 
 export const userReviewSlice = createSlice({
@@ -27,7 +29,10 @@ export const userReviewSlice = createSlice({
     addReview(state, action: PayloadAction<CommentData>) {
       state.review = action.payload;
     },
+    setLoading(state, action: PayloadAction<boolean>) {
+      state.isReviewFormLoading = action.payload;
+    },
   },
 });
 
-export const { setRating, setComment, addReview } = userReviewSlice.actions;
+export const { setRating, setComment, addReview, setLoading } = userReviewSlice.actions;

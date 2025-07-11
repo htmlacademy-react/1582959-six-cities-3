@@ -6,7 +6,7 @@ import { redirectToRoute } from './action';
 import { saveToken, dropToken, getToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
 import { loadReviews, setFavoriteOffers, setOfferDetailedInformation, setOfferNearPlaces } from './offers-data/offers-data-slice.js';
-import { addReview, setComment, setRating } from './user-review/user-review-slice.js';
+import { addReview, setLoading } from './user-review/user-review-slice.js';
 import { toast } from 'react-toastify';
 
 export const fetchOfferAction = createAsyncThunk<OfferList, undefined, {
@@ -20,7 +20,7 @@ export const fetchOfferAction = createAsyncThunk<OfferList, undefined, {
   },
 );
 
-export const fetchOfferDetailedInformation = createAsyncThunk<void, string, {
+export const fetchOfferDetailedInformation = createAsyncThunk<void, string | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -28,8 +28,10 @@ export const fetchOfferDetailedInformation = createAsyncThunk<void, string, {
   'data/fetchOffersInformation',
   async (id, { dispatch, extra: api }) => {
     try {
-      const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-      dispatch(setOfferDetailedInformation(data));
+      if (id !== undefined) {
+        const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+        dispatch(setOfferDetailedInformation(data));
+      }
     } catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
       throw new Error();
@@ -44,9 +46,14 @@ export const fetchNearPlaces = createAsyncThunk<void, string | undefined, {
 }>(
   'data/fetchNearPlaces',
   async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<OfferList>(`${APIRoute.Offers}/${id}/nearby`);
-
-    dispatch(setOfferNearPlaces(data));
+    try {
+      if (id !== undefined) {
+        const { data } = await api.get<OfferList>(`${APIRoute.Offers}/${id}/nearby`);
+        dispatch(setOfferNearPlaces(data));
+      }
+    } catch {
+      throw new Error();
+    }
   },
 );
 
@@ -57,8 +64,14 @@ export const fetchReviewList = createAsyncThunk<void, string | undefined, {
 }>(
   'data/fetchReviewList',
   async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
-    dispatch(loadReviews(data));
+    try {
+      if (id !== undefined) {
+        const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+        dispatch(loadReviews(data));
+      }
+    } catch {
+      throw new Error();
+    }
   },
 );
 
@@ -119,14 +132,14 @@ export const postReview = createAsyncThunk<void,
     'data/postReview',
     async ({ id, rating, comment }, { dispatch, extra: api }) => {
       try {
+        dispatch(setLoading(true));
         await api.post(`${APIRoute.Comments}/${id}`, { rating, comment });
         dispatch(addReview({ id, rating, comment }));
         dispatch(fetchReviewList(id));
       } catch (err) {
         toast.warn('Ошибка при отправке отзыва');
       } finally {
-        dispatch(setRating(0));
-        dispatch(setComment(''));
+        dispatch(setLoading(false));
       }
     },
   );

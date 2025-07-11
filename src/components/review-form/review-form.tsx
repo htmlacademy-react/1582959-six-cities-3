@@ -1,10 +1,10 @@
-import { FormEvent, ChangeEvent, useRef, useState } from 'react';
+import { FormEvent, ChangeEvent, useRef } from 'react';
 import { stars } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postReview } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { setComment, setRating } from '../../store/user-review/user-review-slice';
-import { getComment, getRating } from '../../store/user-review/selectors';
+import { getComment, getRating, getReviewFormLoadingStatus } from '../../store/user-review/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,10 +12,9 @@ function ReviewForm(): JSX.Element {
   const starsRefs = useRef<HTMLInputElement[]>([]);
   const rating = useAppSelector(getRating);
   const comment = useAppSelector(getComment);
+  const isLoading = useAppSelector(getReviewFormLoadingStatus);
   const isValid = () => rating > 0 && comment.length >= 50 && comment.length <= 300;
   const { id } = useParams();
-
-  const [loading, setLoading] = useState(false);
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newRating = Number(evt.target.value);
@@ -32,7 +31,6 @@ function ReviewForm(): JSX.Element {
     if (!isValid()) {
       return;
     }
-    setLoading(true);
     dispatch(
       postReview({
         id: id || '',
@@ -48,7 +46,6 @@ function ReviewForm(): JSX.Element {
     });
     dispatch(setRating(0));
     dispatch(setComment(''));
-    setLoading(false);
   };
 
   return (
@@ -91,7 +88,7 @@ function ReviewForm(): JSX.Element {
           <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit"
-          disabled={loading || !isValid()}
+          disabled={isLoading || !isValid()}
         >Submit
         </button>
       </div>

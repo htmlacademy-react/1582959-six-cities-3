@@ -34,10 +34,8 @@ function OfferPage(): JSX.Element {
   };
 
   useEffect(() => {
-    if (id !== undefined) {
-      dispatch(fetchOfferDetailedInformation(id));
-      dispatch(fetchNearPlaces(id));
-    }
+    dispatch(fetchOfferDetailedInformation(id));
+    dispatch(fetchNearPlaces(id));
   }, [dispatch, id]);
 
   if (!cityMap) {
