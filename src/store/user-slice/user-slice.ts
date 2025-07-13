@@ -3,7 +3,7 @@ import { NameSpace, AuthorizationStatus } from '../../const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 import { UserData } from '../../types/types';
 
-type UserType = {
+export type UserType = {
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
 };

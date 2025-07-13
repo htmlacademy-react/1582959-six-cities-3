@@ -4,7 +4,7 @@ import Logo from '../../components/logo/logo';
 import { Fragment, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOffers, logoutAction } from '../../store/api-actions';
-import { getAuthorizationStatus, getUserData } from '../../store/user-process/selectors';
+import { getAuthorizationStatus, getUserData } from '../../store/user-slice/selectors';
 import { getFavoriteOffers } from '../../store/offers-data/selectors';
 
 function Header(): JSX.Element {

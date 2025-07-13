@@ -68,7 +68,6 @@ export type AuthData = {
 export type UserData = AuthData & {
   name: string;
   avatarUrl: string;
-  email: string;
   isPro: boolean;
   token: string;
 };

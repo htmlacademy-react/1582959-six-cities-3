@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CardLocation, OfferItem } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-slice/selectors';
 import { toggleFavoriteStatus } from '../../store/api-actions';
 
 type CardItemProps = {

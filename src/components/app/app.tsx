@@ -12,7 +12,7 @@ import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import { getAuthCheckedStatus } from '../../store/user-process/selectors';
+import { getAuthCheckedStatus } from '../../store/user-slice/selectors';
 import { getLoadingStatus, getErrorStatus } from '../../store/offers-data/selectors';
 
 type Cities = string[];

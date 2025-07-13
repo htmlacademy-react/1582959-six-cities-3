@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useRef, FormEvent, useState, useEffect } from 'react';
 import { loginAction } from '../../store/api-actions';
 import { changeCity } from '../../store/offers-data/offers-data-slice';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-slice/selectors';
 import { redirectToRoute } from '../../store/action';
 
 function LoginPage(): JSX.Element {
