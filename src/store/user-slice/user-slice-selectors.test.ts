@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { getAuthorizationStatus, getAuthCheckedStatus, getUserData } from './selectors';
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { faker } from '@faker-js/faker';

@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { getComment, getRating, getReviewFormLoadingStatus } from './selectors';
 import { NameSpace } from '../../const';
 import { faker } from '@faker-js/faker';

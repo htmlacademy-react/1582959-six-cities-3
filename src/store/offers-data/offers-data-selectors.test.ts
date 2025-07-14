@@ -1,10 +1,9 @@
-import { describe, expect, it } from 'vitest';
 import { getErrorStatus, getLoadingStatus, getOffers, getActiveCity, getActiveSortOption, getFavoriteOffers, getOfferNearPlaces, getOfferInformation, getReviews } from './selectors';
 import { NameSpace } from '../../const';
 import { faker } from '@faker-js/faker';
 import { MockOffer, MockOfferInformation, MockReviews } from '../../utils/mocks';
 
-describe('UserSlice selectors', () => {
+describe('OffersData selectors', () => {
   const state = {
     [NameSpace.Data]: {
       city: faker.location.city(),
