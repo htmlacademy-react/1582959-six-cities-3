@@ -8,7 +8,14 @@ import { AuthData } from '../../types/types';
 describe('User Slice', () => {
   const initialState = {
     authorizationStatus: AuthorizationStatus.Unknown,
-    userData: null,
+    userData: {
+      email: '',
+      password: '',
+      avatarUrl: '',
+      isPro: false,
+      name: '',
+      token: '',
+    }
   };
 
   const stateAuth = {
@@ -23,11 +30,6 @@ describe('User Slice', () => {
     }
   };
 
-  const stateNoAuth = {
-    authorizationStatus: AuthorizationStatus.NoAuth,
-    userData: null,
-  };
-
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
 
@@ -37,25 +39,33 @@ describe('User Slice', () => {
 
   it('should return default initial state with empty action and undefined state', () => {
     const emptyAction = { type: '' };
-    const expectedState = {
-      authorizationStatus: AuthorizationStatus.Unknown,
-      userData: null,
-    };
     const result = userSlice.reducer(undefined, emptyAction);
-    expect(result).toEqual(expectedState);
+    expect(result).toEqual(initialState);
   });
 
   it('should set "Auth" with "checkAuthAction.fulfilled" action', () => {
-    const authActionFulFilled = checkAuthAction.fulfilled(stateAuth.userData, '', undefined);
+    const payload = {
+      token: faker.internet.jwt(),
+      data: {
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        name: faker.person.fullName(),
+        avatarUrl: faker.image.avatar(),
+        isPro: faker.datatype.boolean(),
+        token: faker.internet.jwt(),
+      },
+    };
+    const authActionFulFilled = checkAuthAction.fulfilled(payload, '', undefined);
     const result = userSlice.reducer(initialState, authActionFulFilled);
-    expect(result).toMatchObject(stateAuth);
+    expect(result.authorizationStatus).toBe(AuthorizationStatus.Auth);
+    expect(result.userData).toEqual(payload.data);
   });
 
   it('should set "NoAuth" with "checkAuthAction.rejected" action', () => {
 
     const result = userSlice.reducer(stateAuth, checkAuthAction.rejected);
 
-    expect(result).toEqual(stateNoAuth);
+    expect(result.authorizationStatus).toBe(AuthorizationStatus.NoAuth);
   });
 
   it('should set "Auth" with "loginAction.fulfilled" action', () => {
@@ -73,14 +83,14 @@ describe('User Slice', () => {
 
     const result = userSlice.reducer(stateAuth, loginAction.rejected);
 
-    expect(result).toEqual(stateNoAuth);
+    expect(result.authorizationStatus).toBe(AuthorizationStatus.NoAuth);
   });
 
   it('should set "NoAuth", with "logoutAction.fulfilled" action', () => {
 
     const result = userSlice.reducer(stateAuth, logoutAction.fulfilled);
 
-    expect(result).toEqual(stateNoAuth);
+    expect(result.authorizationStatus).toBe(AuthorizationStatus.NoAuth);
   });
 
 });

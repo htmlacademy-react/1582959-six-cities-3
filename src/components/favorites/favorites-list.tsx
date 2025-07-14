@@ -12,7 +12,7 @@ function FavoritesList({ city }: FavoritesList): JSX.Element {
   const sortedFavoriteOffers = favoriteOffers.filter((offer) => offer.city.name === city);
 
   return (
-    <div className="favorites__places">
+    <div className="favorites__places" data-testid="city-value">
       {sortedFavoriteOffers.map((offer) => (
         <CardItem
           key={offer.id}

@@ -1,5 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { Offer, OfferItem, Review } from '../types/types';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { Action } from 'redux';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
 
 const Location = {
   latitude: 0,
@@ -20,14 +28,14 @@ const User = {
 
 export const MockOffer: OfferItem = {
   id: faker.string.uuid(),
-  title: 'title',
-  type: 'room',
-  price: 100,
-  rating: 5,
+  title: faker.lorem.sentence(),
+  type: faker.lorem.word(),
+  price: faker.number.int(),
+  rating: faker.number.int({ min: 1, max: 5 }),
   city: City,
   location: Location,
-  isFavorite: false,
-  isPremium: false,
+  isFavorite: faker.datatype.boolean(),
+  isPremium: faker.datatype.boolean(),
   previewImage: faker.image.url(),
 };
 

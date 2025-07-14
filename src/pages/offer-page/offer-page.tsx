@@ -42,7 +42,7 @@ function OfferPage(): JSX.Element {
     return <p>Город не найден</p>;
   }
 
-  if (!offerData) {
+  if (!offerData || id === undefined) {
     return <NotFoundPage />;
   }
 

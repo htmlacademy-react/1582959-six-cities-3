@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewList } from '../../store/api-actions';
 import { getReviews } from '../../store/offers-data/selectors';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 function ReviewList(): JSX.Element {
 
@@ -16,6 +17,10 @@ function ReviewList(): JSX.Element {
   useEffect(() => {
     dispatch(fetchReviewList(id));
   }, [dispatch, id]);
+
+  if (id === undefined) {
+    return <NotFoundPage />;
+  }
 
   return (
     <>
