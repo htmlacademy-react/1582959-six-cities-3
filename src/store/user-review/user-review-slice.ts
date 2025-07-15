@@ -1,19 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { CommentData } from '../../types/types';
+import { postReview } from '../api-actions';
 
 type ReviewsState = {
   review: CommentData;
   isReviewFormLoading: boolean;
+  hasError: boolean;
 };
 
 const initialState: ReviewsState = {
   review: {
     id: '',
-    comment: '',
     rating: 0,
+    comment: '',
   },
   isReviewFormLoading: false,
+  hasError: false,
 };
 
 export const userReviewSlice = createSlice({
@@ -26,13 +29,22 @@ export const userReviewSlice = createSlice({
     setComment(state, action: PayloadAction<string>) {
       state.review.comment = action.payload;
     },
-    addReview(state, action: PayloadAction<CommentData>) {
-      state.review = action.payload;
-    },
-    setLoading(state, action: PayloadAction<boolean>) {
-      state.isReviewFormLoading = action.payload;
-    },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(postReview.pending, (state) => {
+        state.isReviewFormLoading = true;
+        state.hasError = false;
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.review = action.payload;
+        state.isReviewFormLoading = false;
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.isReviewFormLoading = false;
+        state.hasError = true;
+      });
+  }
 });
 
-export const { setRating, setComment, addReview, setLoading } = userReviewSlice.actions;
+export const { setRating, setComment } = userReviewSlice.actions;

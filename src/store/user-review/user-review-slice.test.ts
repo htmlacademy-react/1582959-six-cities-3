@@ -1,4 +1,5 @@
-import { addReview, setComment, setLoading, setRating, userReviewSlice } from './user-review-slice';
+import { postReview } from '../api-actions';
+import { setComment, setRating, userReviewSlice } from './user-review-slice';
 import { faker } from '@faker-js/faker';
 
 describe('UserReview Slice', () => {
@@ -9,6 +10,7 @@ describe('UserReview Slice', () => {
       rating: 0,
     },
     isReviewFormLoading: false,
+    hasError: false,
   };
 
   it('should return initial state with empty action', () => {
@@ -20,6 +22,7 @@ describe('UserReview Slice', () => {
         rating: faker.number.int({ min: 1, max: 5 }),
       },
       isReviewFormLoading: faker.datatype.boolean(),
+      hasError: faker.datatype.boolean(),
     };
 
     const result = userReviewSlice.reducer(expectedState, emptyAction);
@@ -47,24 +50,32 @@ describe('UserReview Slice', () => {
     expect(result.review.comment).toBe(expectedComment);
   });
 
-  it('should add review with "addReview" action', () => {
-    const newReview = {
-      id: faker.string.uuid(),
-      comment: faker.lorem.paragraph(),
-      rating: faker.number.int({ min: 1, max: 5 }),
-    };
+  describe('postReview extraReducer', () => {
+    it('should add review, "isReviewFormLoading" to "false" with "postReview.fulfilled"', () => {
 
-    const result = userReviewSlice.reducer(initialState, addReview(newReview));
-    expect(result.review.id).toBe(newReview.id);
-    expect(result.review.comment).toBe(newReview.comment);
-    expect(result.review.rating).toBe(newReview.rating);
-  });
+      const newReview = {
+        id: faker.string.uuid(),
+        comment: faker.lorem.paragraph(),
+        rating: faker.number.int({ min: 1, max: 5 }),
+      };
+      const result = userReviewSlice.reducer(undefined, postReview.fulfilled(newReview, '', initialState.review));
+      expect(result.review).toEqual(newReview);
+      expect(result.isReviewFormLoading).toBe(false);
+    });
 
-  it('should set "isReviewFormLoading" to "true" with "setLoading" action', () => {
-    const loadingStatus = true;
+    it('should set "isReviewFormLoading" to "true", "hasError" to "false" with "postReview.pending"', () => {
 
-    const result = userReviewSlice.reducer(initialState, setLoading(loadingStatus));
-    expect(result.isReviewFormLoading).toBe(loadingStatus);
+      const result = userReviewSlice.reducer(undefined, postReview.pending('', initialState.review));
+      expect(result.isReviewFormLoading).toBe(true);
+      expect(result.hasError).toBe(false);
+    });
+
+    it('should set "isReviewFormLoading" to "false", "hasError" to "true" with "postReview.rejected"', () => {
+
+      const result = userReviewSlice.reducer(undefined, postReview.rejected);
+      expect(result.isReviewFormLoading).toBe(false);
+      expect(result.hasError).toBe(true);
+    });
   });
 
 });

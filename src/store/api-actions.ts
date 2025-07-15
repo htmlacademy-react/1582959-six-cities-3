@@ -4,8 +4,6 @@ import { AppDispatch, State } from '../types/state.js';
 import { OfferList, AuthData, UserData, Offer, Reviews, CommentData, FavoriteData } from '../types/types.js';
 import { saveToken, dropToken, getToken } from '../services/token';
 import { APIRoute } from '../const';
-import { addReview, setLoading } from './user-review/user-review-slice.js';
-import { toast } from 'react-toastify';
 
 export const fetchOfferAction = createAsyncThunk<OfferList, undefined, {
   state: State;
@@ -86,7 +84,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const postReview = createAsyncThunk<void,
+export const postReview = createAsyncThunk<
+  { id: string; rating: number; comment: string },
   CommentData,
   {
     dispatch: AppDispatch;
@@ -94,16 +93,9 @@ export const postReview = createAsyncThunk<void,
   }>(
     'data/postReview',
     async ({ id, rating, comment }, { dispatch, extra: api }) => {
-      try {
-        dispatch(setLoading(true));
-        await api.post(`${APIRoute.Comments}/${id}`, { rating, comment });
-        dispatch(addReview({ id, rating, comment }));
-        dispatch(fetchReviewList(id));
-      } catch (err) {
-        toast.warn('Ошибка при отправке отзыва');
-      } finally {
-        dispatch(setLoading(false));
-      }
+      await api.post(`${APIRoute.Comments}/${id}`, { rating, comment });
+      dispatch(fetchReviewList(id));
+      return { id, rating, comment };
     },
   );
 
