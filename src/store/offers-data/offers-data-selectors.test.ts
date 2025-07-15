@@ -14,6 +14,10 @@ describe('OffersData selectors', () => {
       offerInformation: MockOfferInformation,
       reviews: [MockReviews],
       isLoading: faker.datatype.boolean(),
+      isOfferInformationLoading: faker.datatype.boolean(),
+      isOffersNearbyLoading: faker.datatype.boolean(),
+      isReviewsLoading: faker.datatype.boolean(),
+      isFavoriteOffersLoading: faker.datatype.boolean(),
       hasError: faker.datatype.boolean(),
     }
   };

@@ -11,6 +11,7 @@ describe('UserReview selectors', () => {
         rating: faker.number.int({ min: 1, max: 5 }),
       },
       isReviewFormLoading: faker.datatype.boolean(),
+      hasError: faker.datatype.boolean(),
     }
   };
 

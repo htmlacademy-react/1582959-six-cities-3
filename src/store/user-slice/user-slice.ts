@@ -5,7 +5,7 @@ import { UserData } from '../../types/types';
 
 export type UserType = {
   authorizationStatus: AuthorizationStatus;
-  userData: UserData;
+  userData: UserData | null;
 };
 
 const initialState: UserType = {
