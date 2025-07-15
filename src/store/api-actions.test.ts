@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { Action } from 'redux';
 import { AppThunkDispatch, MockOffer, MockOfferInformation, MockReviews, extractActionsTypes } from '../utils/mocks';
 import { State } from '../types/state';
-import { checkAuthAction, fetchFavoriteOffers, fetchNearPlaces, fetchOfferAction, fetchOfferDetailedInformation, fetchReviewList, loginAction, logoutAction, postReview } from './api-actions';
+import { checkAuthAction, fetchFavoriteOffers, fetchNearPlaces, fetchOfferAction, fetchOfferDetailedInformation, fetchReviewList, loginAction, logoutAction, postReview, toggleFavoriteStatus } from './api-actions';
 import { APIRoute } from '../const';
 import * as tokenStorage from '../services/token';
 import { AuthData } from '../types/types';
@@ -278,7 +278,7 @@ describe('Async actions', () => {
         rating: faker.number.int({ min: 1, max: 5 }),
         comment: faker.lorem.paragraph(),
       };
-      mockAxiosAdapter.onPost(`${APIRoute.Comments}/1`).reply(200, newReview);
+      mockAxiosAdapter.onPost(`${APIRoute.Comments}/${newReview.id}`, { rating: newReview.rating, comment: newReview.comment }).reply(200, newReview);
 
       await store.dispatch(postReview({
         id: newReview.id,
@@ -288,10 +288,11 @@ describe('Async actions', () => {
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const postReviewFulfilled = emittedActions.at(1) as ReturnType<typeof postReview.fulfilled>;
+      const postReviewFulfilled = emittedActions.at(2) as ReturnType<typeof postReview.fulfilled>;
 
       expect(extractedActionsTypes).toEqual([
         postReview.pending.type,
+        fetchReviewList.pending.type,
         postReview.fulfilled.type,
       ]);
 
@@ -308,6 +309,48 @@ describe('Async actions', () => {
       expect(actions).toEqual([
         fetchReviewList.pending.type,
         fetchReviewList.rejected.type,
+      ]);
+    });
+  });
+
+  describe('toggleFavoriteStatus', () => {
+    it('should dispatch "toggleFavoriteStatus.pending", "toggleFavoriteStatus.fulfilled", when server response 200', async () => {
+      const fakeModel = {
+        id: faker.string.uuid(),
+        isFavorite: faker.datatype.boolean(),
+      };
+
+      mockAxiosAdapter.onPost(`${APIRoute.Favorite}/${fakeModel.id}/${Number(fakeModel.isFavorite)}`).reply(200, fakeModel);
+
+      await store.dispatch(toggleFavoriteStatus(fakeModel));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const toggleFavoriteStatusFulfilled = emittedActions.at(2) as ReturnType<typeof toggleFavoriteStatus.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        toggleFavoriteStatus.pending.type,
+        fetchOfferAction.pending.type,
+        toggleFavoriteStatus.fulfilled.type,
+      ]);
+
+      expect(toggleFavoriteStatusFulfilled.payload).toEqual(fakeModel);
+    });
+
+    it('should dispatch "toggleFavoriteStatus.pending", "toggleFavoriteStatus.rejected" when server response 400', async () => {
+      const fakeModel = {
+        id: faker.string.uuid(),
+        isFavorite: faker.datatype.boolean(),
+      };
+      mockAxiosAdapter.onPost(APIRoute.Offers).reply(400, []);
+
+      await store.dispatch(toggleFavoriteStatus(fakeModel));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        toggleFavoriteStatus.pending.type,
+        fetchOfferAction.pending.type,
+        toggleFavoriteStatus.rejected.type,
       ]);
     });
   });
