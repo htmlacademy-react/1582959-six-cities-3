@@ -3,14 +3,21 @@ import { NameSpace, AuthorizationStatus } from '../../const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 import { UserData } from '../../types/types';
 
-type UserType = {
+export type UserType = {
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
 };
 
 const initialState: UserType = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  userData: null,
+  userData: {
+    email: '',
+    password: '',
+    avatarUrl: '',
+    isPro: false,
+    name: '',
+    token: '',
+  }
 };
 
 export const userSlice = createSlice({
@@ -20,12 +27,15 @@ export const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state, action) => {
+        if (!action.payload.token) {
+          state.authorizationStatus = AuthorizationStatus.NoAuth;
+          return;
+        }
+        state.userData = action.payload.data;
         state.authorizationStatus = AuthorizationStatus.Auth;
-        state.userData = action.payload;
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.userData = null;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
@@ -36,7 +46,6 @@ export const userSlice = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.userData = null;
       });
   }
 });

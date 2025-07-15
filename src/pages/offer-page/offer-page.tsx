@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { fetchNearPlaces, fetchOfferDetailedInformation, toggleFavoriteStatus } from '../../store/api-actions';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { OfferList } from '../../types/types';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-slice/selectors';
 import { getOfferInformation, getOfferNearPlaces } from '../../store/offers-data/selectors';
 
 function OfferPage(): JSX.Element {
@@ -42,7 +42,7 @@ function OfferPage(): JSX.Element {
     return <p>Город не найден</p>;
   }
 
-  if (!offerData) {
+  if (!offerData || id === undefined) {
     return <NotFoundPage />;
   }
 
