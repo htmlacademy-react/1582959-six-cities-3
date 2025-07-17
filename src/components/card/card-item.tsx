@@ -43,7 +43,7 @@ function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
       )}
       <div className={`${page}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width={`${page === 'favorites' ? '150' : '260'}`} height={`${page === 'favorites' ? '110' : '200'}`} alt="Place image" />
+          <img className="place-card__image" data-testid="place-card__image" src={previewImage} width={`${page === 'favorites' ? '150' : '260'}`} height={`${page === 'favorites' ? '110' : '200'}`} alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -75,7 +75,7 @@ function CardItem({ offer, onCardHover, page }: CardItemProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        <h2 className="place-card__name" data-testid="place-card__name">
           <Link to={`/offer/${id}`}>{title} </Link>
         </h2>
         <p className="place-card__type">{type}</p>

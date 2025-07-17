@@ -3,7 +3,7 @@ import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { Action } from 'redux';
-import { AppThunkDispatch, MockOffer, MockOfferInformation, MockReviews, extractActionsTypes } from '../utils/mocks';
+import { AppThunkDispatch, MockOffer, MockOfferInformation, MockReview, extractActionsTypes } from '../utils/mocks';
 import { State } from '../types/state';
 import { checkAuthAction, fetchFavoriteOffers, fetchNearPlaces, fetchOfferAction, fetchOfferDetailedInformation, fetchReviewList, loginAction, logoutAction, postReview, toggleFavoriteStatus } from './api-actions';
 import { APIRoute } from '../const';
@@ -207,7 +207,7 @@ describe('Async actions', () => {
 
   describe('fetchReviewList', () => {
     it('should dispatch "fetchReviewList.pending", "fetchReviewList.fulfilled", when server response 200', async () => {
-      const fakeReviews = [MockReviews];
+      const fakeReviews = [MockReview];
       mockAxiosAdapter.onGet(`${APIRoute.Comments}/1`).reply(200, fakeReviews);
 
       await store.dispatch(fetchReviewList('1'));

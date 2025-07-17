@@ -15,6 +15,7 @@ type MainProps = {
 }
 
 function Main({ city }: MainProps): JSX.Element {
+
   const activeCity = useAppSelector(getActiveCity);
   const activeSortOption = useAppSelector(getActiveSortOption);
   const offers = useAppSelector(getOffers);
@@ -53,7 +54,7 @@ function Main({ city }: MainProps): JSX.Element {
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{selectedOffers.length} places to stay in {activeCity}</b>
         <Sort sorts={sorts} onSortChange={handleSortOptionChange} activeSortOption={activeSortOption} />
-        <div className="cities__places-list places__list tabs__content">
+        <div className="cities__places-list places__list tabs__content" data-testid="card-item" >
           {selectedOffers.map((offer) => (
             <CardItem
               key={offer.id}

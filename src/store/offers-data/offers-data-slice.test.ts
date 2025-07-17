@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { MockOffer, MockOfferInformation, MockReviews } from '../../utils/mocks';
+import { MockOffer, MockOfferInformation, MockReview } from '../../utils/mocks';
 import { changeCity, changeSort, offersDataSlice } from './offers-data-slice';
-import { DEFAULT_CITY, DEFAULT_SORT } from '../../const';
+import { DEFAULT_CITY, DEFAULT_SORT, sorts } from '../../const';
 import { fetchFavoriteOffers, fetchNearPlaces, fetchOfferAction, fetchOfferDetailedInformation, fetchReviewList } from '../api-actions';
 
 describe('OffersData Slice', () => {
@@ -23,12 +23,12 @@ describe('OffersData Slice', () => {
 
   const expectedState = {
     city: faker.location.city(),
-    sort: 'Price: low to high',
+    sort: sorts[0],
     offers: [MockOffer],
     favoriteOffers: [MockOffer],
     offerNearPlaces: [MockOffer],
     offerInformation: MockOfferInformation,
-    reviews: [MockReviews],
+    reviews: [MockReview],
     isLoading: faker.datatype.boolean(),
     isOfferInformationLoading: faker.datatype.boolean(),
     isOffersNearbyLoading: faker.datatype.boolean(),
@@ -59,7 +59,7 @@ describe('OffersData Slice', () => {
   });
 
   it('should change sort type with "changeSort" action', () => {
-    const newSortType = 'Price: low to high';
+    const newSortType = sorts[1];
 
     const result = offersDataSlice.reducer(initialState, changeSort(newSortType));
     expect(result.sort).toBe(newSortType);
@@ -140,7 +140,7 @@ describe('OffersData Slice', () => {
   describe('fetchReviewList extraReducer', () => {
     it('should set "reviews" to array, "isReviewsLoading" to "false" with "fetchReviewList.fulfilled"', () => {
 
-      const fakeReviews = [MockReviews];
+      const fakeReviews = [MockReview];
       const result = offersDataSlice.reducer(undefined, fetchReviewList.fulfilled(fakeReviews, '', undefined));
       expect(result.reviews).toEqual(fakeReviews);
       expect(result.isReviewsLoading).toBe(false);

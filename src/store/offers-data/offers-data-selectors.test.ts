@@ -1,18 +1,18 @@
 import { getErrorStatus, getLoadingStatus, getOffers, getActiveCity, getActiveSortOption, getFavoriteOffers, getOfferNearPlaces, getOfferInformation, getReviews } from './selectors';
-import { NameSpace } from '../../const';
+import { NameSpace, sorts } from '../../const';
 import { faker } from '@faker-js/faker';
-import { MockOffer, MockOfferInformation, MockReviews } from '../../utils/mocks';
+import { MockOffer, MockOfferInformation, MockReview } from '../../utils/mocks';
 
 describe('OffersData selectors', () => {
   const state = {
     [NameSpace.Data]: {
       city: faker.location.city(),
-      sort: 'Price: low to high',
+      sort: sorts[0],
       offers: [MockOffer],
       favoriteOffers: [MockOffer],
       offerNearPlaces: [MockOffer],
       offerInformation: MockOfferInformation,
-      reviews: [MockReviews],
+      reviews: [MockReview],
       isLoading: faker.datatype.boolean(),
       isOfferInformationLoading: faker.datatype.boolean(),
       isOffersNearbyLoading: faker.datatype.boolean(),
