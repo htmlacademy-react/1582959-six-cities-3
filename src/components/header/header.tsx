@@ -26,7 +26,7 @@ function Header(): JSX.Element {
         <div className="header__wrapper">
           <Logo />
           <nav className="header__nav">
-            <ul className="header__nav-list">
+            <ul className="header__nav-list" data-testid="header__nav-list">
               {authorizationStatus === AuthorizationStatus.Auth ?
                 <Fragment>
                   <li className="header__nav-item user">
@@ -34,8 +34,8 @@ function Header(): JSX.Element {
                       <div className="header__avatar-wrapper user__avatar-wrapper" >
                         <img src={userData?.avatarUrl} />
                       </div>
-                      <span className="header__user-name user__name">{userData?.email}</span>
-                      <span className="header__favorite-count">{favoriteOffers.length}</span>
+                      <span className="header__user-name user__name" data-testid="user__name">{userData?.email}</span>
+                      <span className="header__favorite-count" data-testid="favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

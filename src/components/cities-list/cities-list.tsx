@@ -10,7 +10,7 @@ function CitiesList({ cities, activeCity, onChangeCity }: Cities): JSX.Element {
       <ul className="locations__list tabs__list">
         {cities.map((city) => (
           <li className="locations__item" key={city}>
-            <a className={`locations__item-link tabs__item ${activeCity === city ? 'tabs__item--active' : ''}`} href="#"
+            <a className={`locations__item-link tabs__item ${activeCity === city ? 'tabs__item--active' : ''}`} href="#" data-testid="locations__item-link"
               onClick={(evt) => {
                 evt.preventDefault();
                 onChangeCity(city);

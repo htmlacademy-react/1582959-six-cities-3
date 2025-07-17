@@ -10,9 +10,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
-import { getAuthCheckedStatus } from '../../store/user-slice/selectors';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-slice/selectors';
 import { getLoadingStatus, getErrorStatus } from '../../store/offers-data/selectors';
 
 type Cities = string[];
@@ -22,6 +20,7 @@ type AppProps = {
 }
 
 function App({ cities }: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isLoading = useAppSelector(getLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
@@ -39,39 +38,37 @@ function App({ cities }: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
-        <Routes>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<MainPage cities={cities} />}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginPage />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <FavoritesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='offer'
+          element={<OfferPage />}
+        >
           <Route
-            path={AppRoute.Main}
-            element={<MainPage cities={cities} />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute>
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path='offer'
+            path={AppRoute.Offer}
             element={<OfferPage />}
-          >
-            <Route
-              path={AppRoute.Offer}
-              element={<OfferPage />}
-            />
-          </Route>
-          <Route
-            path="*"
-            element={<NotFoundPage />}
           />
-        </Routes>
-      </HistoryRouter>
+        </Route>
+        <Route
+          path="*"
+          element={<NotFoundPage />}
+        />
+      </Routes>
     </HelmetProvider>
   );
 }

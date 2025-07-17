@@ -73,6 +73,7 @@ function LoginPage(): JSX.Element {
                   placeholder="Email"
                   value={email}
                   onChange={handleEmailChange}
+                  data-testid="loginElement"
                   required
                 />
               </div>
@@ -85,6 +86,7 @@ function LoginPage(): JSX.Element {
                   placeholder="Password"
                   pattern="^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{2,}$"
                   title="Пароль должен содержать хотя бы одну букву и цифру."
+                  data-testid="passwordElement"
                   required
                 />
               </div>

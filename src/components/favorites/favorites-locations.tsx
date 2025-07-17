@@ -18,10 +18,10 @@ function FavoritesLocations(): JSX.Element {
   return (
     <ul className="favorites__list">
       {favoriteCities.map((city) => (
-        <li className="favorites__locations-items" key={city}>
+        <li className="favorites__locations-items" data-testid="favorites__locations-items" key={city}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main} onClick={() => handleCityClick(city)}>
+              <Link className="locations__item-link" data-testid="locations__item-link" to={AppRoute.Main} onClick={() => handleCityClick(city)}>
                 <span>{city}</span>
               </Link>
             </div>

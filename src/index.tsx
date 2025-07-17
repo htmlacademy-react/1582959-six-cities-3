@@ -7,6 +7,8 @@ import { cities } from './const';
 import { store } from './store';
 import { fetchOfferAction, checkAuthAction } from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from './browser-history';
+import HistoryRouter from './components/history-route/history-route';
 
 store.dispatch(fetchOfferAction());
 store.dispatch(checkAuthAction());
@@ -18,10 +20,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
-      <App
-        cities={cities}
-      />
+      <HistoryRouter history={browserHistory}>
+        <ToastContainer />
+        <App
+          cities={cities}
+        />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>
 );

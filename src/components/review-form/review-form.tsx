@@ -54,7 +54,7 @@ function ReviewForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {stars.map((star) => (
           <div key={star.id} className="reviews__rating-form form__rating">
-            <input className="form__rating-input visually-hidden" name="rating"
+            <input className="form__rating-input visually-hidden" name="rating" data-testid="rating"
               value={star.id} id={`${star.id}-star`}
               type="radio"
               onChange={handleRatingChange}
@@ -73,7 +73,7 @@ function ReviewForm(): JSX.Element {
           </div>
         ))}
       </div>
-      <textarea className="reviews__textarea form__textarea"
+      <textarea className="reviews__textarea form__textarea" data-testid="reviews__textarea"
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleTextChange}
