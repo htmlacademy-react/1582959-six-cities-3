@@ -15,5 +15,5 @@ describe('Component: MainEmpty', () => {
     screen.getByText(expectedText);
     expect(activeCityValue.textContent).toMatch(expectedTextWithCity);
   });
-  
+
 });
